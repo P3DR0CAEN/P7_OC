@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+///* ========================================================================
+//   #GLOBAL
+//   ======================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+$space-tiny: 6px;
+$space-small: 12px;
+$space: 24px;
+$space-tall: 36px;
+$space-large: 48px;
+$space-huge: 96px;
+
+
+///* ========================================================================
+//   #COLORS
+//   ======================================================================== */
+$color-primary: #FD2D01;
+$color-secondary: #FFD7D7;
+$color-tertiary: #4E5166;
+$color-white: #ffffff;
+$color-black: #000000;
+
+
+///* ========================================================================
+//   #FONTS
+//   ======================================================================== */
+$font-HUGE: 2.25rem;
+$font-Huge: 2rem;
+$font-huge: 1.75rem; //28
+$font-LARGE: 1.5rem; //24
+$font-Large: 1.25rem; //20
+$font-large: 1.125rem; //18
+$font-normal: 1rem; //16
+$font-small: 0.875rem; //14
+$font-Small: 0.8125rem; //13
+$font-SMALL: 0.625rem; //10
+
+
+///* ========================================================================
+//   #SASS-MQ
+//   ======================================================================== */
+@mixin s-mobile {
+    @media (max-width: 320px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (min-width: 350px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: 740px) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: 980px) {
+        @content;
+    }
+}
+
+@mixin wide {
+    @media (min-width: 1300px) {
+        @content;
+    }
+}

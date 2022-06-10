@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "sass": "^1.52.3",
     "vue": "^3.2.36",
     "vue-router": "^4.0.15"
   },
@@ -19,6 +20,7 @@
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/test-utils": "^2.0.0",
     "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^8.2.0",
     "jsdom": "^19.0.0",
     "prettier": "^2.5.1",

@@ -1,31 +1,31 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import auth from "@/views/auth.vue";
+import profile from "@/views/profile.vue";
+
+const routes = [
+    {
+        name: "auth",
+        path: "/",
+        meta: {
+            layout: "blank",
+            class: "Page_Auth",
+        },
+        component: auth,
+    },
+    {
+        name: "profile",
+        path: "/profile",
+        meta: {
+            class: "Page_Profile",
+        },
+        component: profile,
+        props: true,
+    },
+];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: "/",
-      name: "home",
-      component: HomeView,
-    },
-    {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AboutView.vue"),
-    },
-    {
-      path: "/signup",
-      name: "signup",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/signup.vue"),
-    },
-  ],
+    history: createWebHistory(),
+    routes,
 });
 
 export default router;
