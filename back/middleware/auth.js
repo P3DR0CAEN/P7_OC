@@ -8,10 +8,11 @@ module.exports = (req, res, next) => {
             token,
             process.env.USER_TOKEN_CONNEXION
         );
+        console.log(decodedToken);
         const userId = decodedToken.userId;
         req.userId = userId;
         next();
-    } catch {
+    } catch (error) {
         res.status(401).json({
             error: new Error("Invalid request!"),
         });

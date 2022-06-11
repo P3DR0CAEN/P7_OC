@@ -33,9 +33,9 @@ app.use(bodyParser.json());
 
 app.use("/api/auth", userRoute);
 
-app.use(function (err, req, res, next) {
+/* app.use(function (err, req, res, next) {
     res.status(500).send("Une erreur est survenue !");
     next();
-});
+}); */
 
 module.exports = app;

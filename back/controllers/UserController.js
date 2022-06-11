@@ -74,10 +74,10 @@ exports.login = async (req, res, next) => {
                             .status(401)
                             .json({ error: "Mot de passe incorrect !" });
                     }
-                    res.status(200).json({
-                        userId: user._id,
+                    return res.status(200).json({
+                        userId: user.dataValues.id,
                         token: jwt.sign(
-                            { userId: user._id },
+                            { userId: user.dataValues.id },
                             process.env.USER_TOKEN_CONNEXION,
                             { expiresIn: "24h" }
                         ),
@@ -86,6 +86,22 @@ exports.login = async (req, res, next) => {
                 .catch((error) => {
                     return res.status(500).json({ error });
                 });
+        })
+        .catch((error) => {
+            return res.status(401).json({ error: "Utilisateur non trouvé !" });
+        });
+};
+
+exports.account = async (req, res, next) => {
+    await models.User.findByPk(req.userId)
+        .then((user) => {
+            const data = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                created_at: user.created_at,
+            };
+            return res.status(200).json(data);
         })
         .catch((error) => {
             return res.status(401).json({ error: "Utilisateur non trouvé !" });
