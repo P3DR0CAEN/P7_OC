@@ -1,45 +1,72 @@
 <script setup>
-import { ref } from "vue";
-import { reactive } from "vue";
+import { ref, reactive } from "vue";
+import router from "../router";
 import axios from "axios";
 
 const mode = reactive({
     value: "login",
     switchToCreateAccount() {
-        this.value = "create";
+        mode.value = "create";
     },
     switchToLogin() {
-        this.value = "login";
+        mode.value = "login";
     },
 });
 
-const email = "";
-const prenom = "";
-const nom = "";
-const password = "";
+const email = ref("");
+const firstName = ref("");
+const lastName = ref("");
+const password = ref("");
 
-function axiosPost() {
+function register() {
     console.log("event axiosPost");
     // POST request using axios with error handling
-    const req = {
-        email: document.getElementById("email").value,
-        password: document.getElementById("password").value,
+    const data = {
+        email: email.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        password: password.value,
     };
     axios
-        .post("http://localhost:4000/api/auth/signup", req)
+        .post("auth/signup", data)
         .then((response) => {
-            console.log("post effectué");
+            console.log(response);
+            login();
+            return;
         })
         .catch((error) => {
-            console.error("Il y a une erreur !", error.response.data);
+            console.error("Il y a une erreur !", error.response.data.error);
 
-            if (error.response.data.errno == 1062) {
-                console.log("adresse email deja prise");
-                document.getElementById("Error").innerHTML =
-                    "L'adresse email est déjà prise";
+            document.getElementById("respError").innerHTML =
+                error.response.data.error;
+        });
+}
+
+function login() {
+    const data = {
+        email: email.value,
+        password: password.value,
+    };
+    axios
+        .post("auth/login", data)
+        .then((response) => {
+            console.log(response);
+            const authToken = response.data.token;
+            axios.defaults.headers.common["Authorization"] =
+                "Bearer " + authToken;
+            router.push("/profile");
+            return;
+        })
+        .catch((error) => {
+            console.error("Il y a une erreur !", error);
+
+            if (typeof error.response !== "undefined") {
+                document.getElementById("respError").innerHTML =
+                    error.response.data.error;
+            } else {
+                document.getElementById("respError").innerHTML =
+                    "Une erreur est survenue !";
             }
-
-            this.errorMessage = error.message;
         });
 }
 </script>
@@ -62,11 +89,11 @@ function axiosPost() {
             >
         </p>
         <div class="form-row">
-            <input v-model="email" type="text" placeholder="Adresse mail" />
+            <input v-model="email" type="email" placeholder="Adresse mail" />
         </div>
         <div class="form-row" v-if="mode.value == 'create'">
-            <input v-model="prenom" type="text" placeholder="Prénom" />
-            <input v-model="nom" type="text" placeholder="Nom" />
+            <input v-model="firstName" type="text" placeholder="Prénom" />
+            <input v-model="lastName" type="text" placeholder="Nom" />
         </div>
         <div class="form-row">
             <input
@@ -75,37 +102,18 @@ function axiosPost() {
                 placeholder="Mot de passe"
             />
         </div>
-        <div
-            class="form-row"
-            v-if="mode.value == 'login' && status == 'error_login'"
-        >
-            Adresse mail et/ou mot de passe invalide
-        </div>
-        <div
-            class="form-row"
-            v-if="mode.value == 'create' && status == 'error_create'"
-        >
-            Adresse mail déjà utilisée
-        </div>
         <div class="form-row">
             <button
                 @click="login()"
                 class="button"
-                :class="{ 'button--disabled': !validatedFields }"
                 v-if="mode.value == 'login'"
             >
-                <span v-if="status == 'loading'">Connexion en cours...</span>
-                <span v-else>Connexion</span>
+                <span>Connexion</span>
             </button>
-            <button
-                @click="createAccount()"
-                class="button"
-                :class="{ 'button--disabled': !validatedFields }"
-                v-else
-            >
-                <span v-if="status == 'loading'">Création en cours...</span>
-                <span v-else>Créer mon compte</span>
+            <button @click="register()" class="button" v-else>
+                <span>Créer mon compte</span>
             </button>
         </div>
+        <div id="respError" style="color: red; text-align: center"></div>
     </div>
 </template>

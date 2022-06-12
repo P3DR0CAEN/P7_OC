@@ -19,8 +19,6 @@ const className = function () {
     return route.meta.class || null;
 };
 
-console.log(className());
-
 onMounted(() => {
     layout();
 });
