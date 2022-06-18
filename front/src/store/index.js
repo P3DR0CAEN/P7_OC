@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
-import { Router } from "vue-router";
+import router from "../router";
+import axios from "axios";
 
-export const useStoreUser = defineStore("StoreUser", {
+export const useStoreUser = defineStore("User", {
     // arrow function recommended for full type inference
     state: () => {
         return {

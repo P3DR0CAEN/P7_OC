@@ -6,6 +6,7 @@
     color: $color-white;
     padding: $space-tiny $space-small;
     width: fit-content;
+    font-weight: bold;
     &:hover {
         background-color: lighten($color-tertiary, 10);
         cursor: pointer;

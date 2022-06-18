@@ -2,32 +2,9 @@
 import { ref, reactive } from "vue";
 import router from "../router";
 import axios from "axios";
-import { onMounted } from "vue";
+import { useStoreUser } from "../store";
 
-const user = ref({
-    firstName: undefined,
-    lastName: undefined,
-    email: undefined,
-    image: undefined,
-});
-
-function getUserInfos() {
-    axios
-        .get("user/account")
-        .then((response) => {
-            user.value.firstName = response.data.firstName;
-            user.value.lastName = response.data.lastName;
-            user.value.email = response.data.email;
-            user.value.image = response.data.image;
-        })
-        .catch((error) => {
-            router.push("/auth");
-        });
-}
-
-onMounted(() => {
-    getUserInfos();
-});
+const user = useStoreUser();
 </script>
 
 <template>
