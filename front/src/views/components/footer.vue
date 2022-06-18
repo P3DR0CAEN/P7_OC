@@ -1,3 +1,3 @@
 <template>
-    <footer>Footer</footer>
+    <footer>Copyright Groupomania</footer>
 </template>

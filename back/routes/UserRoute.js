@@ -2,29 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 const asyncHandler = require("express-async-handler");
-const multer = require("../middleware/multer-config");
 const auth = require("../middleware/auth");
 
-const userCtrl = require("../controllers/UserController");
+const multerMiddleware = require("../middleware/multer-traitement");
 
-const multerMiddleware = function (req, res, next) {
-    multer(req, res, function (err) {
-        if (err) {
-            return res.status(500).json("Veuillez upload un fichier image");
-        }
-        // Everything went fine.
-        return next();
-    });
-};
+const userSignup = require("../controllers/user.signup");
+const userLogin = require("../controllers/user.login");
+const userGetAccount = require("../controllers/user.get.account");
+const userUpdateAccount = require("../controllers/user.update.account");
 
-router.post("/signup", multerMiddleware, asyncHandler(userCtrl.signup));
-router.post("/login", asyncHandler(userCtrl.login));
-router.get("/account", auth, asyncHandler(userCtrl.getAccount));
-router.put(
-    "/account",
-    auth,
-    multerMiddleware,
-    asyncHandler(userCtrl.updateAccount)
-);
+router.post("/signup", multerMiddleware, asyncHandler(userSignup));
+router.post("/login", asyncHandler(userLogin));
+router.get("/account", auth, asyncHandler(userGetAccount));
+router.put("/account", auth, multerMiddleware, asyncHandler(userUpdateAccount));
 
 module.exports = router;
