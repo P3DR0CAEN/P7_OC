@@ -1,11 +1,16 @@
 /* settings */
 
 @import "settings";
+@import "Layout";
 
 /* composants */
 
 @import "components/components.header";
 @import "components/components.footer";
+@import "components/components.button";
 
 /* pages */
 @import "pages/pages.auth";
+@import "pages/pages.home";
+@import "pages/pages.profil";
+@import "pages/pages.settings";

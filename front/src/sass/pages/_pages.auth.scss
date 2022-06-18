@@ -38,15 +38,6 @@
             }
             button {
                 margin: 0 auto;
-                padding: $space-small $space;
-                background-color: $color-tertiary;
-                color: $color-white;
-                border: none;
-                border-radius: $space-small;
-                &:hover {
-                    cursor: pointer;
-                    background-color: lighten($color-tertiary, 10);
-                }
             }
         }
     }

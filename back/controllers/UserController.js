@@ -2,6 +2,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const { models } = require("../sequelize");
 const jwt = require("jsonwebtoken");
+const fs = require("fs-extra");
 
 exports.signup = async (req, res, next) => {
     /* console.log(req.body); */
@@ -92,16 +93,45 @@ exports.login = async (req, res, next) => {
         });
 };
 
-exports.account = async (req, res, next) => {
+exports.getAccount = async (req, res, next) => {
     await models.User.findByPk(req.userId)
         .then((user) => {
             const data = {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
+                image: user.image,
                 created_at: user.created_at,
             };
             return res.status(200).json(data);
+        })
+        .catch((error) => {
+            return res.status(401).json({ error: "Utilisateur non trouvé !" });
+        });
+};
+
+exports.updateAccount = async (req, res, next) => {
+    let imageName = null;
+    if (typeof req.file !== "undefined") {
+        imageName = req.file.filename;
+    }
+
+    await models.User.update(
+        {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            image: imageName,
+        },
+        {
+            where: {
+                id: req.userId,
+            },
+            omitNull: true,
+        }
+    )
+        .then((user) => {
+            return res.status(200).json({ message: "Profil mis à jour !" });
         })
         .catch((error) => {
             return res.status(401).json({ error: "Utilisateur non trouvé !" });

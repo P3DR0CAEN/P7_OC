@@ -19,7 +19,6 @@ const lastName = ref("");
 const password = ref("");
 
 function register() {
-    console.log("event axiosPost");
     // POST request using axios with error handling
     const data = {
         email: email.value,
@@ -28,15 +27,12 @@ function register() {
         password: password.value,
     };
     axios
-        .post("auth/signup", data)
+        .post("user/signup", data)
         .then((response) => {
-            console.log(response);
             login();
             return;
         })
         .catch((error) => {
-            console.error("Il y a une erreur !", error.response.data.error);
-
             document.getElementById("respError").innerHTML =
                 error.response.data.error;
         });
@@ -48,18 +44,16 @@ function login() {
         password: password.value,
     };
     axios
-        .post("auth/login", data)
+        .post("user/login", data)
         .then((response) => {
-            console.log(response);
             const authToken = response.data.token;
             axios.defaults.headers.common["Authorization"] =
                 "Bearer " + authToken;
-            router.push("/profile");
+            localStorage.setItem("AuthToken", "Bearer " + authToken);
+            router.push({ name: "home" });
             return;
         })
         .catch((error) => {
-            console.error("Il y a une erreur !", error);
-
             if (typeof error.response !== "undefined") {
                 document.getElementById("respError").innerHTML =
                     error.response.data.error;

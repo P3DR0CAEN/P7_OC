@@ -1,0 +1,13 @@
+.button {
+    text-align: center;
+    border: none;
+    border-radius: $space;
+    background-color: $color-tertiary;
+    color: $color-white;
+    padding: $space-tiny $space-small;
+    width: fit-content;
+    &:hover {
+        background-color: lighten($color-tertiary, 10);
+        cursor: pointer;
+    }
+}

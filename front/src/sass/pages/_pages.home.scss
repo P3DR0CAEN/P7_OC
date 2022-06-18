@@ -1,0 +1,105 @@
+.Page_Home, .Page_Profil {
+
+    .content {
+        background-color: $color-secondary;
+        flex: 1 1 40%;
+        padding: $space;
+        display: flex;
+        flex-direction: column;
+        gap: $space;
+        .new_post{
+            background-color: $color-white;
+            border-radius: $space-small;
+            display: flex;
+            gap: $space-small;
+            padding: $space-small;
+            .new_post__left {
+                .user_icon {
+                    position: relative;
+                    height: 50px;
+                    width: 50px;
+                    img {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        -o-object-fit: cover;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+                }
+            }
+            .new_post__content {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: $space-small;
+                textarea {
+                    border-radius: $space-small;
+                    padding: $space-small;
+                    width: -webkit-fill-available;
+                }
+                .new_post__actions {
+                    display: flex;
+                    justify-content: space-between;
+                    .icons {
+                        display: flex;
+                        gap: $space-tiny;
+                        i {
+                            font-size: 25px;
+                        }
+                    }
+                }
+            }
+        }
+        .post_list {
+            display: flex;
+            flex-direction: column;
+            gap: $space;
+            .post {
+                background-color: $color-white;
+                border-radius: $space-small;
+                display: flex;
+                gap: $space-small;
+                padding: $space-small;
+                .post__left {
+                    .user_icon {
+                        i {
+                            font-size: 50px;
+                        }
+                    }
+                }
+                .post__content {
+                    display: flex;
+                    flex-direction: column;
+                    gap: $space;
+                    .post__content__user_name {
+
+                    }
+                    .post__content__text {
+
+                    }
+                    .post__content__actions {
+                        display: flex;
+                        flex-direction: row;
+                        gap: $space-large;
+                        >div {
+                            flex: 1 1 0;
+                            text-align: center;
+                            border-radius: $space;
+                            background-color: $color-tertiary;
+                            color: $color-white;
+                            padding: $space-tiny;
+                            &:hover {
+                                cursor: pointer;
+                                background-color: lighten($color-tertiary, 10);
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,11 +1,21 @@
 import { createRouter, createWebHistory } from "vue-router";
+import home from "@/views/home.vue";
 import auth from "@/views/auth.vue";
-import profile from "@/views/profile.vue";
+import profil from "@/views/profil.vue";
+import settings from "@/views/settings.vue";
 
 const routes = [
     {
-        name: "auth",
+        name: "home",
         path: "/",
+        meta: {
+            class: "Page_Home",
+        },
+        component: home,
+    },
+    {
+        name: "auth",
+        path: "/auth",
         meta: {
             layout: "blank",
             class: "Page_Auth",
@@ -13,13 +23,20 @@ const routes = [
         component: auth,
     },
     {
-        name: "profile",
-        path: "/profile",
+        name: "profil",
+        path: "/profil",
         meta: {
-            class: "Page_Profile",
+            class: "Page_Profil",
         },
-        component: profile,
-        props: true,
+        component: profil,
+    },
+    {
+        name: "settings",
+        path: "/settings",
+        meta: {
+            class: "Page_Settings",
+        },
+        component: settings,
     },
 ];
 

@@ -1,0 +1,37 @@
+.Page_Settings {
+    .content {
+        position: relative;
+        background-color: $color-secondary;
+        flex: 1 1 40%;
+        padding: $space;
+        .settings {
+            background-color: $color-white;
+            border-radius: $space-small;
+            display: flex;
+            flex-direction: column;
+            gap: $space-small;
+            padding: $space-small;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            h1 {
+                white-space: nowrap;
+            }
+            .form-row {
+                display: flex;
+                flex-direction: column;
+                gap: $space-tiny;
+                input {
+                    flex: 1 0 0;
+                    padding: $space-tiny;
+                    border: 1px solid $color-tertiary;
+                    border-radius: $space-small;
+                }
+                button {
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+}

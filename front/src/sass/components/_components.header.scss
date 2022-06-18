@@ -1,6 +1,11 @@
 header {
     padding: $space;
     background-color: red;
-    color: white;
-    text-align: center;
+    .img-background {
+        background-color: $color-white;
+        padding: $space-small $space;
+        max-width: 200px;
+        border-radius: $space;
+        margin: 0 auto;
+    }
 }

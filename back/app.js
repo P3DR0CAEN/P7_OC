@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 
 const userRoute = require("./routes/UserRoute");
 
+const path = require("path");
+
 const app = express();
 
 try {
@@ -31,7 +33,10 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-app.use("/api/auth", userRoute);
+app.use("/images/users", express.static(path.join(__dirname, "images/users")));
+app.use("/images/posts", express.static(path.join(__dirname, "images/posts")));
+
+app.use("/api/user", userRoute);
 
 /* app.use(function (err, req, res, next) {
     res.status(500).send("Une erreur est survenue !");
