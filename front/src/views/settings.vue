@@ -1,8 +1,8 @@
 <script setup>
-import { reactive } from "vue";
+import axios from "axios";
+import { ref, reactive } from "vue";
 import { useStoreUser } from "../store";
-
-import apiUpdateUser from "../api/user/user.update.account";
+/* import apiUpdateUser from "../api/user/user.update"; */
 
 const user = useStoreUser();
 
@@ -12,7 +12,7 @@ const dataForm = reactive({
     email: user.email,
 });
 
-function updateUser() {
+function updateUserInfos() {
     var uploadUserImage = document.querySelector("#user_image");
 
     const data = {
@@ -22,8 +22,19 @@ function updateUser() {
         UploadDestination: "users",
         image: uploadUserImage.files[0],
     };
-
-    apiUpdateUser(data);
+    /* apiUpdateUser(data); */
+    axios
+        .put("user/account", data, {
+            headers: {
+                "Content-Type": `multipart/form-data`,
+            },
+        })
+        .then((response) => {
+            user.refresh();
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 }
 </script>
 
@@ -57,7 +68,9 @@ function updateUser() {
         </div>
 
         <div class="form-row">
-            <button class="button" @click="updateUser()">Mettre à jour</button>
+            <button class="button" @click="updateUserInfos()">
+                Mettre à jour
+            </button>
         </div>
     </div>
 </template>

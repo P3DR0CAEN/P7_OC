@@ -14,7 +14,7 @@ export const useStoreUser = defineStore("User", {
         };
     },
     actions: {
-        updateUserInfos() {
+        refresh() {
             axios
                 .get("user/account")
                 .then((response) => {

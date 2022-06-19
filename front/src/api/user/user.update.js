@@ -11,8 +11,7 @@ function update(data) {
             },
         })
         .then((response) => {
-            console.log(response.data.message);
-            user.updateUserInfos();
+            user.refresh();
         })
         .catch((error) => {
             console.log(error);

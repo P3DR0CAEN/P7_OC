@@ -14,7 +14,7 @@ defineProps({
 
 const user = useStoreUser();
 
-user.updateUserInfos();
+user.refresh();
 
 function logout() {
     axios.defaults.headers.common["Authorization"] = "";
