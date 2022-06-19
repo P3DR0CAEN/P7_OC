@@ -1,10 +1,25 @@
 <script setup>
 import { ref, reactive } from "vue";
-import router from "../router";
-import axios from "axios";
 import { useStoreUser } from "../store";
+import apiPostCreate from "../api/post/post.create";
 
 const user = useStoreUser();
+
+const NewPost = reactive({
+    content: undefined,
+});
+
+function CreatePost() {
+    var uploadPostImage = document.querySelector("#post_image");
+
+    const data = {
+        content: NewPost.content,
+        UploadDestination: "post",
+        image: uploadPostImage.files[0],
+    };
+
+    apiPostCreate(data);
+}
 </script>
 
 <template>
@@ -21,13 +36,26 @@ const user = useStoreUser();
                 </div>
             </div>
             <div class="new_post__content">
-                <textarea name="new_post" id="" cols="30" rows="5"></textarea>
+                <textarea
+                    cols="30"
+                    rows="5"
+                    v-model="NewPost.content"
+                ></textarea>
+                <input
+                    type="file"
+                    hidden
+                    name="post_image"
+                    id="post_image"
+                    style="flex: inherit"
+                />
                 <div class="new_post__actions">
                     <div class="icons">
-                        <i class="las la-image"></i>
+                        <label for="post_image"
+                            ><i class="las la-image"></i
+                        ></label>
                         <i class="las la-smile"></i>
                     </div>
-                    <button class="button">Poster</button>
+                    <button class="button" @click="CreatePost()">Poster</button>
                 </div>
             </div>
         </div>

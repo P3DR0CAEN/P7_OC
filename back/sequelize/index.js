@@ -10,7 +10,10 @@ const sequelize = new Sequelize(
     }
 );
 
-const modelDefiners = [require("./models/user.model")];
+const modelDefiners = [
+    require("./models/user.model"),
+    require("./models/post.model"),
+];
 
 // We define all models according to their files.
 for (const modelDefiner of modelDefiners) {

@@ -6,6 +6,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const userRoute = require("./routes/UserRoute");
+const postRoute = require("./routes/PostRoute");
 
 const path = require("path");
 
@@ -37,6 +38,7 @@ app.use("/images/users", express.static(path.join(__dirname, "images/users")));
 app.use("/images/posts", express.static(path.join(__dirname, "images/posts")));
 
 app.use("/api/user", userRoute);
+app.use("/api/post", postRoute);
 
 /* app.use(function (err, req, res, next) {
     res.status(500).send("Une erreur est survenue !");
