@@ -16,10 +16,15 @@ const storage = multer.diskStorage({
         }
         callback(null, path);
     },
-    filename: (req, file, callback) => {
-        const name = file.originalname.split(" ").join("_");
+    filename: function (req, file, callback) {
+        let name = undefined;
+        if (req.body.UploadDestination == "users") {
+            name = "PP_" + req.userId;
+        } else {
+            name = "Post_" + Date.now();
+        }
         const extension = MIME_TYPES[file.mimetype];
-        callback(null, name + Date.now() + "." + extension);
+        callback(null, name + "." + extension);
     },
 });
 

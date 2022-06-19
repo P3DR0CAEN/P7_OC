@@ -3,6 +3,9 @@ import { ref, reactive } from "vue";
 import router from "../router";
 import axios from "axios";
 
+import apiLogin from "../api/user/user.login";
+import apiRegister from "../api/user/user.signup";
+
 const mode = reactive({
     value: "login",
     switchToCreateAccount() {
@@ -26,16 +29,7 @@ function register() {
         lastName: lastName.value,
         password: password.value,
     };
-    axios
-        .post("user/signup", data)
-        .then((response) => {
-            login();
-            return;
-        })
-        .catch((error) => {
-            document.getElementById("respError").innerHTML =
-                error.response.data.error;
-        });
+    apiRegister(data);
 }
 
 function login() {
@@ -43,25 +37,7 @@ function login() {
         email: email.value,
         password: password.value,
     };
-    axios
-        .post("user/login", data)
-        .then((response) => {
-            const authToken = response.data.token;
-            axios.defaults.headers.common["Authorization"] =
-                "Bearer " + authToken;
-            localStorage.setItem("AuthToken", "Bearer " + authToken);
-            router.push({ name: "home" });
-            return;
-        })
-        .catch((error) => {
-            if (typeof error.response !== "undefined") {
-                document.getElementById("respError").innerHTML =
-                    error.response.data.error;
-            } else {
-                document.getElementById("respError").innerHTML =
-                    "Une erreur est survenue !";
-            }
-        });
+    apiLogin(data);
 }
 </script>
 

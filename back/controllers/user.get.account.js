@@ -1,6 +1,6 @@
 const { models } = require("../sequelize");
 
-exports.getAccount = async (req, res, next) => {
+module.exports = async (req, res, next) => {
     await models.User.findByPk(req.userId)
         .then((user) => {
             const data = {

@@ -1,8 +1,13 @@
 const { models } = require("../sequelize");
 const bcrypt = require("bcrypt");
 
-exports.signup = async (req, res, next) => {
-    /* console.log(req.body); */
+module.exports = async (req, res, next) => {
+    format_email = /\S+@\S+\.\S+/;
+    if (!format_email.test(req.body.email)) {
+        return res.status(500).json({
+            error: "Veuillez entrer une adresse email valide.",
+        });
+    }
 
     if (req.body.password == undefined || req.body.password == null) {
         return res.status(500).json({

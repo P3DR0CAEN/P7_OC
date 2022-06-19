@@ -3,7 +3,7 @@ const { models } = require("../sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-exports.login = async (req, res, next) => {
+module.exports = async (req, res, next) => {
     await models.User.findOne({
         where: { email: req.body.email },
     })

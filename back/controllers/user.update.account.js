@@ -1,6 +1,6 @@
 const { models } = require("../sequelize");
 
-exports.updateAccount = async (req, res, next) => {
+module.exports = async (req, res, next) => {
     let imageName = null;
     if (typeof req.file !== "undefined") {
         imageName = req.file.filename;
