@@ -1,4 +1,4 @@
-const { models } = require("../sequelize");
+const { models } = require("../../sequelize");
 
 module.exports = async (req, res, next) => {
     let imageName = null;
@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
         {
             content: req.body.content,
             image: imageName,
-            user_id: req.userId,
+            userId: req.userId,
         },
         {
             omitNull: true,

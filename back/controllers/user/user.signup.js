@@ -1,4 +1,4 @@
-const { models } = require("../sequelize");
+const { models } = require("../../sequelize");
 const bcrypt = require("bcrypt");
 
 module.exports = async (req, res, next) => {

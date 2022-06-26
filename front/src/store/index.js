@@ -6,11 +6,7 @@ export const useStoreUser = defineStore("User", {
     // arrow function recommended for full type inference
     state: () => {
         return {
-            // all these properties will have their type inferred automatically
-            firstName: undefined,
-            lastName: undefined,
-            email: undefined,
-            image: undefined,
+            data: undefined,
         };
     },
     actions: {
@@ -18,10 +14,12 @@ export const useStoreUser = defineStore("User", {
             axios
                 .get("user/account")
                 .then((response) => {
-                    this.firstName = response.data.firstName;
-                    this.lastName = response.data.lastName;
-                    this.email = response.data.email;
-                    this.image = response.data.image;
+                    this.data = {
+                        firstName: response.data.firstName,
+                        lastName: response.data.lastName,
+                        email: response.data.email,
+                        image: response.data.image,
+                    };
                 })
                 .catch((error) => {
                     router.push("/auth");

@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { models } = require("../sequelize");
+const { models } = require("../../sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 

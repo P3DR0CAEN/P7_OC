@@ -1,127 +1,110 @@
 <script setup>
-import { ref, reactive } from "vue";
-import router from "../router";
-import axios from "axios";
+import { ref, reactive, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import { useStoreUser } from "../store";
+import GetUserProfil from "../api/user/user.profil";
+import moment from "moment";
 
 const user = useStoreUser();
+const route = useRoute();
+
+let userId = user.id;
+
+if (route.params.id) {
+    userId = route.params.id;
+}
+
+const userProfil = ref(null);
+
+const updateProfil = async function () {
+    userProfil.value = await GetUserProfil(userId)
+        .then((response) => {
+            console.log(response);
+            return response.data;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+console.log(userProfil);
+
+const formatDate = function (date) {
+    return moment(new Date(date)).format("DD/MM/YY à HH:mm");
+};
+
+onMounted(async () => {
+    updateProfil();
+});
 </script>
 
 <template>
-    <div class="content">
-        <div class="profil__banner">
-            <div class="profil__picture">
-                <img
-                    :src="'http://localhost:4000/images/users/' + user.image"
-                    alt=""
-                />
-            </div>
-            <div class="profil__name">
-                {{ user.firstName }} {{ user.lastName }}
-            </div>
-        </div>
-        <div class="post_list">
-            <div class="post">
-                <div class="post__left">
-                    <div class="user_icon">
-                        <i class="las la-user-circle"></i>
-                    </div>
+    <div v-if="userProfil === undefined">chargement de la page</div>
+    <div v-else-if="userProfil == null"></div>
+    <div v-else>
+        <div class="content">
+            <div class="profil__banner">
+                <div class="profil__picture">
+                    <img
+                        :src="
+                            'http://localhost:4000/images/users/' +
+                            userProfil.image
+                        "
+                        alt=""
+                    />
                 </div>
-                <div class="post__content">
-                    <div class="post__content__user_name">Nom Prénom</div>
-                    <div class="post__content__text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book. It has
-                        survived not only five centuries, but also the leap into
-                        electronic typesetting, remaining essentially unchanged.
-                        It was popularised in the 1960s with the release of
-                        Letraset sheets containing Lorem Ipsum passages, and
-                        more recently with desktop publishing software like
-                        Aldus PageMaker including versions of Lorem Ipsum.
-                    </div>
-                    <div class="post__content__actions">
-                        <div class="post__content__actions__like">
-                            <i class="las la-thumbs-up"></i>
-                        </div>
-                        <div class="post__content__actions__comment">
-                            <i class="las la-comment-alt"></i>
-                        </div>
-                        <div class="post__content__actions__share">
-                            <i class="las la-share"></i>
-                        </div>
-                    </div>
+                <div class="profil__name">
+                    {{ userProfil.firstname }}
+                    {{ userProfil.lastname }}
                 </div>
             </div>
-            <div class="post">
-                <div class="post__left">
-                    <div class="user_icon">
-                        <i class="las la-user-circle"></i>
-                    </div>
-                </div>
-                <div class="post__content">
-                    <div class="post__content__user_name">Nom Prénom</div>
-                    <div class="post__content__text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book. It has
-                        survived not only five centuries, but also the leap into
-                        electronic typesetting, remaining essentially unchanged.
-                        It was popularised in the 1960s with the release of
-                        Letraset sheets containing Lorem Ipsum passages, and
-                        more recently with desktop publishing software like
-                        Aldus PageMaker including versions of Lorem Ipsum.
-                    </div>
-                    <div class="post__content__actions">
-                        <div class="post__content__actions__like">
-                            <i class="las la-thumbs-up"></i>
+            <div class="post_list">
+                <template v-for="post in userProfil.Posts">
+                    <div class="post">
+                        <div class="post__left">
+                            <div class="user_icon">
+                                <img
+                                    :src="`http://localhost:4000/images/users/${post.User.image}`"
+                                    alt=""
+                                />
+                            </div>
                         </div>
-                        <div class="post__content__actions__comment">
-                            <i class="las la-comment-alt"></i>
-                        </div>
-                        <div class="post__content__actions__share">
-                            <i class="las la-share"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="post">
-                <div class="post__left">
-                    <div class="user_icon">
-                        <i class="las la-user-circle"></i>
-                    </div>
-                </div>
-                <div class="post__content">
-                    <div class="post__content__user_name">Nom Prénom</div>
-                    <div class="post__content__text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book. It has
-                        survived not only five centuries, but also the leap into
-                        electronic typesetting, remaining essentially unchanged.
-                        It was popularised in the 1960s with the release of
-                        Letraset sheets containing Lorem Ipsum passages, and
-                        more recently with desktop publishing software like
-                        Aldus PageMaker including versions of Lorem Ipsum.
-                    </div>
-                    <div class="post__content__actions">
-                        <div class="post__content__actions__like">
-                            <i class="las la-thumbs-up"></i>
-                        </div>
-                        <div class="post__content__actions__comment">
-                            <i class="las la-comment-alt"></i>
-                        </div>
-                        <div class="post__content__actions__share">
-                            <i class="las la-share"></i>
+                        <div class="post__content">
+                            <div class="post__content__user_name">
+                                <a :href="'/profil/' + post.User.id"
+                                    >{{ post.User.firstname }}
+                                    {{ post.User.lastname }}</a
+                                >
+
+                                <br />
+                                <span class="post__content__date"
+                                    >le {{ formatDate(post.created_at) }}</span
+                                >
+                            </div>
+                            <div class="post__content__text">
+                                {{ post.content }}
+                            </div>
+                            <div v-if="post.image" class="post__content__image">
+                                <img
+                                    :src="`http://localhost:4000/images/posts/${post.image}`"
+                                    alt=""
+                                />
+                            </div>
+
+                            <div class="post__content__actions">
+                                <div class="post__content__actions__like">
+                                    <i class="las la-thumbs-up"></i>
+                                </div>
+                                <div class="post__content__actions__comment">
+                                    <i class="las la-comment-alt"></i>
+                                </div>
+                                <div class="post__content__actions__share">
+                                    <i class="las la-share"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </template>
             </div>
         </div>
     </div>

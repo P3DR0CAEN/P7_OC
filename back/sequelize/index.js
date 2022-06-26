@@ -1,4 +1,5 @@
 const { Sequelize } = require("sequelize");
+const { applyExtraSetup } = require("./extra-setup");
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
@@ -19,5 +20,8 @@ const modelDefiners = [
 for (const modelDefiner of modelDefiners) {
     modelDefiner(sequelize);
 }
+
+// We execute any extra setup after the models are defined, such as adding associations.
+applyExtraSetup(sequelize);
 
 module.exports = sequelize;

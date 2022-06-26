@@ -24,7 +24,7 @@ const routes = [
     },
     {
         name: "profil",
-        path: "/profil",
+        path: "/profil/:id?",
         meta: {
             class: "Page_Profil",
         },
