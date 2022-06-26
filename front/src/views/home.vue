@@ -33,11 +33,10 @@ const createPost = function () {
 const updatePosts = async function () {
     posts.value = await apiPostGetAll()
         .then((response) => {
-            console.log("response ", response);
             return response.data;
         })
         .catch((error) => {
-            console.log("test wdfgbd " + error);
+            console.log(error);
         });
 };
 

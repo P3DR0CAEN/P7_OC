@@ -85,12 +85,17 @@ module.exports = async (req, res, next) => {
         ],
     })
         .then((user) => {
-            mergePosts = user.Posts.concat(user.sharedPosts).sort(
-                (a) => new Date(a.created_at)
-            );
+            mergePosts = user.Posts.concat(user.sharedPosts).sort(function (
+                a,
+                b
+            ) {
+                // Turn your strings into dates, and then subtract them
+                // to get a value that is either negative, positive, or zero.
+                return new Date(b.created_at) - new Date(a.created_at);
+            });
 
             let data = user.toJSON();
-            data["allPosts"] = mergePosts.reverse();
+            data["allPosts"] = mergePosts;
 
             return res.status(200).json(data);
         })

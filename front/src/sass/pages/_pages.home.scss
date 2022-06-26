@@ -131,7 +131,7 @@
                                 cursor: pointer;
                                 background-color: lighten($color-tertiary, 10);
                             }
-                            &.shared {
+                            &.active {
                                 background-color: $color-primary;
                             }
 

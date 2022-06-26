@@ -15,10 +15,16 @@ module.exports = async (req, res, next) => {
                     "created_at",
                 ],
             },
+
             {
                 model: models.User,
                 attributes: ["id", "firstname", "lastname"],
                 as: "sharedBy",
+            },
+            {
+                model: models.User,
+                attributes: ["id", "firstname", "lastname"],
+                as: "likedBy",
             },
         ],
     })

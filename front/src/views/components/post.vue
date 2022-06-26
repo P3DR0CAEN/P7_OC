@@ -1,6 +1,7 @@
 <script setup>
 import apiPostDelete from "../../api/post/post.delete";
 import apiPostShare from "../../api/post/post.share";
+import apiPostLike from "../../api/post/post.like";
 import moment from "moment";
 
 defineProps(["post", "user"]);
@@ -23,6 +24,17 @@ const deletePost = function (id) {
 
 const sharePost = function (id) {
     apiPostShare(id)
+        .then((response) => {
+            emit("updatePosts");
+            return;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+const likePost = function (id) {
+    apiPostLike(id)
         .then((response) => {
             emit("updatePosts");
             return;
@@ -75,7 +87,16 @@ const sharePost = function (id) {
             </div>
 
             <div class="post__content__actions">
-                <div class="post__content__actions__like">
+                <div
+                    class="post__content__actions__like"
+                    v-bind:class="
+                        post.likedBy.filter((e) => e.id === user.data.id)
+                            .length > 0
+                            ? 'active'
+                            : ''
+                    "
+                    @click="likePost(post.id)"
+                >
                     <i class="las la-thumbs-up"></i>
                 </div>
                 <div class="post__content__actions__comment">
@@ -86,7 +107,7 @@ const sharePost = function (id) {
                     v-bind:class="
                         post.sharedBy.filter((e) => e.id === user.data.id)
                             .length > 0
-                            ? 'shared'
+                            ? 'active'
                             : ''
                     "
                     @click="sharePost(post.id)"
