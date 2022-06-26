@@ -8,12 +8,19 @@ module.exports = async (req, res, next) => {
     }
 
     await models.User.findOne({
-        attributes: ["firstname", "lastname", "email", "image", "created_at"],
+        attributes: [
+            "id",
+            "firstname",
+            "lastname",
+            "email",
+            "image",
+            "created_at",
+        ],
         where: { id: userId },
         include: [
             {
                 model: models.Post,
-                attributes: ["content", "image", "created_at"],
+                attributes: ["id", "content", "image", "created_at"],
                 include: [
                     {
                         model: models.User,
@@ -26,12 +33,23 @@ module.exports = async (req, res, next) => {
                             "created_at",
                         ],
                     },
+                    {
+                        model: models.User,
+                        attributes: ["id", "firstname", "lastname"],
+                        as: "sharedBy",
+                    },
+                    {
+                        model: models.User,
+                        attributes: ["id", "firstname", "lastname"],
+                        as: "likedBy",
+                    },
                 ],
-                order: [["updatedAt", "DESC"]],
+                order: "created_at DESC",
             },
 
             {
                 model: models.Post,
+                attributes: ["id", "content", "image", "created_at"],
                 as: "sharedPosts",
                 include: [
                     {
@@ -45,14 +63,36 @@ module.exports = async (req, res, next) => {
                             "created_at",
                         ],
                     },
+                    {
+                        model: models.User,
+                        attributes: ["id", "firstname", "lastname"],
+                        as: "sharedBy",
+                    },
+                    {
+                        model: models.User,
+                        attributes: ["id", "firstname", "lastname"],
+                        as: "likedBy",
+                    },
                 ],
-                order: [["updatedAt", "DESC"]],
+                order: "created_at DESC",
+            },
+
+            {
+                model: models.Post,
+                attributes: ["id", "content", "image", "created_at"],
+                as: "likedPosts",
             },
         ],
     })
         .then((user) => {
-            console.log(user);
-            return res.status(200).json(user);
+            mergePosts = user.Posts.concat(user.sharedPosts).sort(
+                (a) => new Date(a.created_at)
+            );
+
+            let data = user.toJSON();
+            data["allPosts"] = mergePosts.reverse();
+
+            return res.status(200).json(data);
         })
         .catch((error) => {
             console.log(error);

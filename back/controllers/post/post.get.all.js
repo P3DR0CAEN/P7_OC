@@ -3,7 +3,24 @@ const { models } = require("../../sequelize");
 module.exports = async (req, res, next) => {
     await models.Post.findAll({
         order: [["created_at", "DESC"]],
-        include: models.User,
+        include: [
+            {
+                model: models.User,
+                attributes: [
+                    "id",
+                    "firstname",
+                    "lastname",
+                    "email",
+                    "image",
+                    "created_at",
+                ],
+            },
+            {
+                model: models.User,
+                attributes: ["id", "firstname", "lastname"],
+                as: "sharedBy",
+            },
+        ],
     })
         .then(async (posts) => {
             return res.status(200).json(posts);

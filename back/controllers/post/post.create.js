@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
         imageName = req.file.filename;
     }
 
-    const newPost = await models.Post.create(
+    await models.Post.create(
         {
             content: req.body.content,
             image: imageName,

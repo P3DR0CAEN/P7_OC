@@ -7,8 +7,8 @@ import { useStoreUser } from "../store";
 const user = useStoreUser();
 
 const dataForm = reactive({
-    firstName: user.data.firstName,
-    lastName: user.data.lastName,
+    firstName: user.data.firstname,
+    lastName: user.data.lastname,
     email: user.data.email,
 });
 

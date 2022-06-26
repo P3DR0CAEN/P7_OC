@@ -37,4 +37,52 @@ module.exports = (sequelize) => {
             updatedAt: "updated_at",
         }
     );
+
+    sequelize.define(
+        "shared_posts",
+        {
+            // Model attributes are defined here
+            id: {
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+            },
+            userId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            postId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+        },
+        {
+            // Other model options go here
+            timestamps: false,
+        }
+    );
+
+    sequelize.define(
+        "liked_posts",
+        {
+            // Model attributes are defined here
+            id: {
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+            },
+            userId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            postId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+        },
+        {
+            // Other model options go here
+            timestamps: false,
+        }
+    );
 };

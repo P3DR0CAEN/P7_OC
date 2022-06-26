@@ -3,12 +3,16 @@ import { ref, reactive, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useStoreUser } from "../store";
 import GetUserProfil from "../api/user/user.profil";
+
+import apiPostDelete from "../api/post/post.delete";
+import apiPostShare from "../api/post/post.share";
+
 import moment from "moment";
 
 const user = useStoreUser();
 const route = useRoute();
 
-let userId = user.id;
+let userId = user.data.id;
 
 if (route.params.id) {
     userId = route.params.id;
@@ -19,7 +23,6 @@ const userProfil = ref(null);
 const updateProfil = async function () {
     userProfil.value = await GetUserProfil(userId)
         .then((response) => {
-            console.log(response);
             return response.data;
         })
         .catch((error) => {
@@ -27,7 +30,27 @@ const updateProfil = async function () {
         });
 };
 
-console.log(userProfil);
+const deletePost = function (id) {
+    apiPostDelete(id)
+        .then((response) => {
+            updateProfil();
+            return;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+const sharePost = function (id) {
+    apiPostShare(id)
+        .then((response) => {
+            updateProfil();
+            return;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
 
 const formatDate = function (date) {
     return moment(new Date(date)).format("DD/MM/YY à HH:mm");
@@ -59,8 +82,15 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="post_list">
-                <template v-for="post in userProfil.Posts">
+                <template v-for="post in userProfil.allPosts">
                     <div class="post">
+                        <div
+                            v-if="post.User.id == user.data.id"
+                            class="post__remove"
+                            @click="deletePost(post.id)"
+                        >
+                            <i class="las la-times-circle"></i>
+                        </div>
                         <div class="post__left">
                             <div class="user_icon">
                                 <img
@@ -75,6 +105,12 @@ onMounted(async () => {
                                     >{{ post.User.firstname }}
                                     {{ post.User.lastname }}</a
                                 >
+                                <span
+                                    v-if="post.shared_posts"
+                                    class="post__content__date"
+                                >
+                                    <i class="las la-share"></i>
+                                </span>
 
                                 <br />
                                 <span class="post__content__date"
@@ -98,7 +134,17 @@ onMounted(async () => {
                                 <div class="post__content__actions__comment">
                                     <i class="las la-comment-alt"></i>
                                 </div>
-                                <div class="post__content__actions__share">
+                                <div
+                                    class="post__content__actions__share"
+                                    v-bind:class="
+                                        post.sharedBy.filter(
+                                            (e) => e.id === user.data.id
+                                        ).length > 0
+                                            ? 'shared'
+                                            : ''
+                                    "
+                                    @click="sharePost(post.id)"
+                                >
                                     <i class="las la-share"></i>
                                 </div>
                             </div>

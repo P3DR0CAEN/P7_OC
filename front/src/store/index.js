@@ -15,8 +15,9 @@ export const useStoreUser = defineStore("User", {
                 .get("user/account")
                 .then((response) => {
                     this.data = {
-                        firstName: response.data.firstName,
-                        lastName: response.data.lastName,
+                        id: response.data.id,
+                        firstname: response.data.firstname,
+                        lastname: response.data.lastname,
                         email: response.data.email,
                         image: response.data.image,
                     };
