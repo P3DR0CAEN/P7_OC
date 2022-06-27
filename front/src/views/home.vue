@@ -5,6 +5,7 @@ import apiPostGetAll from "../api/post/post.get.all";
 import apiPostCreate from "../api/post/post.create";
 
 import postComponent from "./components/post.vue";
+import { EmojiButton } from "@joeattardi/emoji-button";
 
 const user = useStoreUser();
 
@@ -22,6 +23,7 @@ const createPost = function () {
 
     apiPostCreate(data)
         .then((response) => {
+            NewPost.content = undefined;
             updatePosts();
             return;
         })
@@ -40,8 +42,22 @@ const updatePosts = async function () {
         });
 };
 
+const emojiPicker = () => {
+    const button = document.querySelector("#emoji-button");
+    const picker = new EmojiButton();
+    picker.on("emoji", (emoji) => {
+        document.querySelector("#new_post__content").value += emoji.emoji;
+        NewPost.content = document.querySelector("#new_post__content").value;
+    });
+    button.addEventListener("click", () => {
+        picker.pickerVisible ? picker.hidePicker() : picker.showPicker(button);
+    });
+};
+
 onMounted(async () => {
     updatePosts();
+
+    emojiPicker();
 });
 </script>
 
@@ -64,6 +80,7 @@ onMounted(async () => {
                     cols="30"
                     rows="5"
                     v-model="NewPost.content"
+                    id="new_post__content"
                 ></textarea>
                 <input
                     type="file"
@@ -71,14 +88,13 @@ onMounted(async () => {
                     name="post_image"
                     id="post_image"
                     ref="inputPostImage"
-                    style="flex: inherit"
                 />
                 <div class="new_post__actions">
                     <div class="icons">
                         <label for="post_image"
                             ><i class="las la-image"></i
                         ></label>
-                        <i class="las la-smile"></i>
+                        <i id="emoji-button" class="las la-smile"></i>
                     </div>
                     <button class="button" @click="createPost()">Poster</button>
                 </div>
