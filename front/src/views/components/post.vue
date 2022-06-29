@@ -56,10 +56,7 @@ const likePost = function (id) {
         </div>
         <div class="post__left">
             <div class="user_icon">
-                <img
-                    :src="`http://localhost:4000/images/users/${post.User.image}`"
-                    alt=""
-                />
+                <img :src="`${post.User.image}`" alt="" />
             </div>
         </div>
         <div class="post__content">
@@ -80,10 +77,7 @@ const likePost = function (id) {
                 {{ post.content }}
             </div>
             <div v-if="post.image" class="post__content__image">
-                <img
-                    :src="`http://localhost:4000/images/posts/${post.image}`"
-                    alt=""
-                />
+                <img :src="`${post.image}`" alt="" />
             </div>
 
             <div class="post__content__actions">

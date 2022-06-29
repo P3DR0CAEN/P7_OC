@@ -39,13 +39,7 @@ onMounted(async () => {
         <div class="content">
             <div class="profil__banner">
                 <div class="profil__picture">
-                    <img
-                        :src="
-                            'http://localhost:4000/images/users/' +
-                            userProfil.image
-                        "
-                        alt="image utilisateur"
-                    />
+                    <img :src="userProfil.image" alt="image utilisateur" />
                 </div>
                 <div class="profil__name">
                     {{ userProfil.firstname }}

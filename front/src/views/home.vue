@@ -67,13 +67,7 @@ onMounted(async () => {
         <div class="new_post">
             <div class="new_post__left">
                 <div class="user_icon">
-                    <img
-                        :src="
-                            'http://localhost:4000/images/users/' +
-                            user.data.image
-                        "
-                        alt=""
-                    />
+                    <img :src="user.data.image" alt="" />
                 </div>
             </div>
             <div class="new_post__content">

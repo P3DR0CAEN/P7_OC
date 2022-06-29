@@ -33,13 +33,7 @@ function logout() {
             <div class="left">
                 <div class="left__content">
                     <div class="user_icon">
-                        <img
-                            :src="
-                                'http://localhost:4000/images/users/' +
-                                user.data.image
-                            "
-                            alt=""
-                        />
+                        <img :src="user.data.image" alt="" />
                     </div>
                     <div class="name">
                         {{ user.data.firstName }}
