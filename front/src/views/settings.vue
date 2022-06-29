@@ -2,9 +2,11 @@
 import axios from "axios";
 import { ref, reactive } from "vue";
 import { useStoreUser } from "../store";
-/* import apiUpdateUser from "../api/user/user.update"; */
+import apiUpdateUser from "../api/user/user.update";
 
 const user = useStoreUser();
+
+const inputUserImage = ref(null);
 
 const dataForm = reactive({
     firstName: user.data.firstname,
@@ -19,16 +21,9 @@ function updateUserInfos() {
         firstName: dataForm.firstName,
         lastName: dataForm.lastName,
         email: dataForm.email,
-        UploadDestination: "users",
-        image: uploadUserImage.files[0],
+        image: inputUserImage.value.files[0],
     };
-    /* apiUpdateUser(data); */
-    axios
-        .put("user/account", data, {
-            headers: {
-                "Content-Type": `multipart/form-data`,
-            },
-        })
+    apiUpdateUser(data)
         .then((response) => {
             user.refresh();
         })
@@ -47,6 +42,7 @@ function updateUserInfos() {
                 type="file"
                 name="user_image"
                 id="user_image"
+                ref="inputUserImage"
                 style="flex: inherit"
             />
         </div>

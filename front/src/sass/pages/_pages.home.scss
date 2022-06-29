@@ -127,12 +127,19 @@
                             background-color: $color-tertiary;
                             color: $color-white;
                             padding: $space-tiny;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 3px;
                             &:hover {
                                 cursor: pointer;
                                 background-color: lighten($color-tertiary, 10);
                             }
                             &.active {
                                 background-color: $color-primary;
+                            }
+                            span {
+                                font-size: $font-SMALL;
                             }
 
                         }

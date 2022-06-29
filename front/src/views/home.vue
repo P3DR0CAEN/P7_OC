@@ -35,6 +35,7 @@ const createPost = function () {
 const updatePosts = async function () {
     posts.value = await apiPostGetAll()
         .then((response) => {
+            /* console.log(response.data); */
             return response.data;
         })
         .catch((error) => {

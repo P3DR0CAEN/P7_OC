@@ -98,6 +98,7 @@ const likePost = function (id) {
                     @click="likePost(post.id)"
                 >
                     <i class="las la-thumbs-up"></i>
+                    <span> ( {{ post.likedBy.length }} ) </span>
                 </div>
                 <div class="post__content__actions__comment">
                     <i class="las la-comment-alt"></i>
@@ -113,6 +114,7 @@ const likePost = function (id) {
                     @click="sharePost(post.id)"
                 >
                     <i class="las la-share"></i>
+                    <span> ( {{ post.sharedBy.length }} ) </span>
                 </div>
             </div>
         </div>

@@ -21,7 +21,7 @@ const firstName = ref("");
 const lastName = ref("");
 const password = ref("");
 
-function register() {
+async function register() {
     // POST request using axios with error handling
     const data = {
         email: email.value,
@@ -29,15 +29,40 @@ function register() {
         lastName: lastName.value,
         password: password.value,
     };
-    apiRegister(data);
+    await apiRegister(data)
+        .then((response) => {
+            login();
+            return;
+        })
+        .catch((error) => {
+            document.getElementById("respError").innerHTML =
+                error.response.data.error;
+        });
 }
 
-function login() {
+async function login() {
     const data = {
         email: email.value,
         password: password.value,
     };
-    apiLogin(data);
+    await apiLogin(data)
+        .then((response) => {
+            const authToken = response.data.token;
+            axios.defaults.headers.common["Authorization"] =
+                "Bearer " + authToken;
+            localStorage.setItem("AuthToken", "Bearer " + authToken);
+            router.push({ name: "home" });
+            return;
+        })
+        .catch((error) => {
+            if (typeof error.response !== "undefined") {
+                document.getElementById("respError").innerHTML =
+                    error.response.data.error;
+            } else {
+                document.getElementById("respError").innerHTML =
+                    "Une erreur est survenue !";
+            }
+        });
 }
 </script>
 
