@@ -58,7 +58,14 @@ module.exports = (sequelize) => {
         },
         {
             // Other model options go here
-            timestamps: false,
+            // don't forget to enable timestamps!
+            timestamps: true,
+
+            // I want updatedAt to actually be called created_at
+            createdAt: "created_at",
+
+            // I want updatedAt to actually be called updated_at
+            updatedAt: "updated_at",
         }
     );
 
@@ -82,7 +89,14 @@ module.exports = (sequelize) => {
         },
         {
             // Other model options go here
-            timestamps: false,
+            // don't forget to enable timestamps!
+            timestamps: true,
+
+            // I want updatedAt to actually be called created_at
+            createdAt: "created_at",
+
+            // I want updatedAt to actually be called updated_at
+            updatedAt: "updated_at",
         }
     );
 };

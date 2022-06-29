@@ -94,12 +94,7 @@ module.exports = async (req, res, next) => {
             data["image"] = "http://" + host + "/images/users/" + user.image;
 
             //merge les posts publié avec ceux partagés
-            mergePosts = user.Posts.concat(user.sharedPosts).sort(function (
-                a,
-                b
-            ) {
-                return new Date(b.created_at) - new Date(a.created_at);
-            });
+            mergePosts = user.Posts.concat(user.sharedPosts);
 
             //rename post images path
             mergePosts.forEach((post) => {
@@ -109,7 +104,19 @@ module.exports = async (req, res, next) => {
                 post["image"] =
                     "http://" + host + "/images/posts/" + post.image;
 
-                console.log(post);
+                // if shared post : get date of share
+                post.dataValues["sortedDate"] = post.created_at;
+                if (typeof post.shared_posts !== "undefined") {
+                    post.dataValues["sortedDate"] =
+                        post.shared_posts.created_at;
+                }
+            });
+
+            mergePosts.sort(function (a, b) {
+                return (
+                    new Date(b.dataValues.sortedDate).getTime() -
+                    new Date(a.dataValues.sortedDate).getTime()
+                );
             });
 
             data["allPosts"] = mergePosts;

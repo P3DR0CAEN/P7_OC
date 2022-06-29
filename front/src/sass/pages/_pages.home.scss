@@ -6,7 +6,7 @@
         padding: $space;
         display: flex;
         flex-direction: column;
-        gap: $space;
+        gap: $space-large;
         .new_post{
             background-color: $color-white;
             border-radius: $space-small;
@@ -59,7 +59,7 @@
         .post_list {
             display: flex;
             flex-direction: column;
-            gap: $space;
+            gap: 40px;
             .post {
                 position: relative;
                 background-color: $color-white;
@@ -67,6 +67,16 @@
                 display: flex;
                 gap: $space-small;
                 padding: $space-small;
+                .post__share {
+                    position: absolute;
+                    top: -11px;
+                    background: white;
+                    padding: 3px 6px;
+                    border-radius: 100px;
+                    font-size: $font-Small;
+                    font-weight: normal;
+                    color: gray;
+                }
                 .post__remove {
                     position: absolute;
                     top: 10px;

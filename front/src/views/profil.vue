@@ -51,6 +51,7 @@ onMounted(async () => {
                     <postComponent
                         :post="post"
                         :user="user"
+                        :userProfil="userProfil"
                         @update-posts="updateProfil()"
                     ></postComponent>
                 </template>

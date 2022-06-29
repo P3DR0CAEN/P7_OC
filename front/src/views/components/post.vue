@@ -4,7 +4,7 @@ import apiPostShare from "../../api/post/post.share";
 import apiPostLike from "../../api/post/post.like";
 import moment from "moment";
 
-defineProps(["post", "user"]);
+defineProps(["post", "user", "userProfil"]);
 const emit = defineEmits(["updatePosts"]);
 
 const formatDate = function (date) {
@@ -47,6 +47,10 @@ const likePost = function (id) {
 
 <template>
     <div class="post">
+        <span v-if="post.shared_posts" class="post__share">
+            <i class="las la-share"></i> {{ userProfil.firstname }}
+            {{ userProfil.lastname }} à partager ceci
+        </span>
         <div
             v-if="post.User.id == user.data.id"
             class="post__remove"
@@ -64,10 +68,6 @@ const likePost = function (id) {
                 <a :href="'/profil/' + post.User.id"
                     >{{ post.User.firstname }} {{ post.User.lastname }}</a
                 >
-                <span v-if="post.shared_posts" class="post__content__date">
-                    <i class="las la-share"></i>
-                </span>
-
                 <br />
                 <span class="post__content__date"
                     >le {{ formatDate(post.created_at) }}</span
