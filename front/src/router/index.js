@@ -6,14 +6,6 @@ import settings from "@/views/settings.vue";
 
 const routes = [
     {
-        name: "home",
-        path: "/",
-        meta: {
-            class: "Page_Home",
-        },
-        component: home,
-    },
-    {
         name: "auth",
         path: "/auth",
         meta: {
@@ -37,6 +29,14 @@ const routes = [
             class: "Page_Settings",
         },
         component: settings,
+    },
+    {
+        name: "home",
+        path: "/",
+        meta: {
+            class: "Page_Home",
+        },
+        component: home,
     },
 ];
 

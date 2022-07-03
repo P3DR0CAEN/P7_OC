@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import router from "../router";
-import axios from "axios";
+import apiAccount from "../api/user/user.account";
 
 export const useStoreUser = defineStore("User", {
     // arrow function recommended for full type inference
@@ -11,8 +11,7 @@ export const useStoreUser = defineStore("User", {
     },
     actions: {
         refresh() {
-            axios
-                .get("user/account")
+            apiAccount()
                 .then((response) => {
                     this.data = {
                         id: response.data.id,

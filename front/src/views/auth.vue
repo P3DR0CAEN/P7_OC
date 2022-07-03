@@ -1,7 +1,6 @@
 <script setup>
 import { ref, reactive } from "vue";
 import router from "../router";
-import axios from "axios";
 
 import apiLogin from "../api/user/user.login";
 import apiRegister from "../api/user/user.signup";
@@ -48,9 +47,7 @@ async function login() {
     await apiLogin(data)
         .then((response) => {
             const authToken = response.data.token;
-            axios.defaults.headers.common["Authorization"] =
-                "Bearer " + authToken;
-            localStorage.setItem("AuthToken", "Bearer " + authToken);
+            localStorage.setItem("AuthToken", authToken);
             router.push({ name: "home" });
             return;
         })
@@ -59,6 +56,7 @@ async function login() {
                 document.getElementById("respError").innerHTML =
                     error.response.data.error;
             } else {
+                console.log(error);
                 document.getElementById("respError").innerHTML =
                     "Une erreur est survenue !";
             }

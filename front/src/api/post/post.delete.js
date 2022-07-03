@@ -1,5 +1,5 @@
-import axios from "axios";
+import axios from "@/lib/axios";
 
-export default function create(id) {
-    return axios.post("post/delete/" + id);
+export default function remove(id) {
+    return axios().post("post/delete/" + id);
 }

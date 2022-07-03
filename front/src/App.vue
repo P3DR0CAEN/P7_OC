@@ -8,8 +8,9 @@ import blankLayout from "@/views/layouts/layout.blank.vue";
 const route = useRoute();
 
 const layout = function () {
-    const Layout = route.meta.layout || null;
-    if (Layout == "blank") {
+    console.log(route.fullPath);
+    const layout = route.meta.layout || null;
+    if (layout == "blank") {
         return blankLayout;
     }
     return defaultLayout;

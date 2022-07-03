@@ -12,12 +12,13 @@ defineProps({
     mainClass: String,
 });
 
+console.log("layoutdefault");
+
 const user = useStoreUser();
 
 user.refresh();
 
 function logout() {
-    axios.defaults.headers.common["Authorization"] = "";
     localStorage.removeItem("AuthToken");
     router.push("/auth");
     return;

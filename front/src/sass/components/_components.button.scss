@@ -11,4 +11,7 @@
         background-color: lighten($color-tertiary, 10);
         cursor: pointer;
     }
+    &.active {
+        background-color: $color-primary;
+    }
 }

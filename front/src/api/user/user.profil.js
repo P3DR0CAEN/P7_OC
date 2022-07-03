@@ -1,5 +1,9 @@
-import axios from "axios";
+import axios from "@/lib/axios";
 
-export default function getFromUser(id) {
-    return axios.get("user/profil/" + id);
-}
+export const GetUserProfil = (id) => {
+    return axios().get("user/getProfil/" + id);
+};
+
+export const GetUserPosts = (id) => {
+    return axios().get("user/getPosts/" + id);
+};

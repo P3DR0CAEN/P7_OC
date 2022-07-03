@@ -8,9 +8,12 @@ const multerMiddleware = require("../middleware/multer-traitement");
 
 const userSignup = require("../controllers/user/user.signup");
 const userLogin = require("../controllers/user/user.login");
-const userGetAccount = require("../controllers/user/user.get.account");
+
+const userGetAccount = require("../controllers/user/user.get.profil");
 const userUpdateAccount = require("../controllers/user/user.update.account");
+
 const userGetProfil = require("../controllers/user/user.get.profil");
+const userGetPost = require("../controllers/post/post.get.user");
 
 router.post("/signup", multerMiddleware("users"), asyncHandler(userSignup));
 router.post("/login", asyncHandler(userLogin));
@@ -21,7 +24,9 @@ router.put(
     multerMiddleware("users"),
     asyncHandler(userUpdateAccount)
 );
-router.get("/profil/:id", auth, asyncHandler(userGetProfil));
-router.get("/profil", auth, asyncHandler(userGetProfil));
+router.get("/getProfil/:id", auth, asyncHandler(userGetProfil));
+router.get("/getProfil", auth, asyncHandler(userGetProfil));
+router.get("/getPosts/:id", auth, asyncHandler(userGetPost));
+router.get("/getPosts", auth, asyncHandler(userGetPost));
 
 module.exports = router;

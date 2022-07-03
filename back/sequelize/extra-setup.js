@@ -1,8 +1,10 @@
 function applyExtraSetup(sequelize) {
-    const { User, Post, shared_posts, liked_posts } = sequelize.models;
+    const { User, Post, shared_posts, liked_posts, Comment } = sequelize.models;
 
     User.hasMany(Post);
     Post.belongsTo(User);
+    Post.hasMany(Comment);
+    Comment.belongsTo(User);
 
     User.belongsToMany(Post, {
         as: "sharedPosts",

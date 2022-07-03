@@ -4,10 +4,10 @@ import { useStoreUser } from "../store";
 import apiPostGetAll from "../api/post/post.get.all";
 import apiPostCreate from "../api/post/post.create";
 
-import postComponent from "./components/post.vue";
+import PostComponent from "./components/post.vue";
 import { EmojiButton } from "@joeattardi/emoji-button";
 
-const user = useStoreUser();
+const authUser = useStoreUser();
 
 const posts = ref(null);
 const inputPostImage = ref(null);
@@ -67,7 +67,7 @@ onMounted(async () => {
         <div class="new_post">
             <div class="new_post__left">
                 <div class="user_icon">
-                    <img :src="user.data.image" alt="" />
+                    <img :src="authUser.data.image" alt="" />
                 </div>
             </div>
             <div class="new_post__content">
@@ -100,11 +100,11 @@ onMounted(async () => {
         <div v-else>
             <div class="post_list">
                 <template v-for="post in posts">
-                    <postComponent
+                    <post-component
                         :post="post"
-                        :user="user"
+                        :authUser="authUser"
                         @update-posts="updatePosts()"
-                    ></postComponent>
+                    ></post-component>
                 </template>
             </div>
         </div>

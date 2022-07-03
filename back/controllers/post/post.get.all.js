@@ -23,12 +23,20 @@ module.exports = async (req, res, next) => {
             {
                 model: models.User,
                 attributes: ["id", "firstname", "lastname"],
-                as: "sharedBy",
+                as: "likedBy",
+            },
+            {
+                model: models.Comment,
+                attributes: ["id", "content", "image"],
+                include: {
+                    model: models.User,
+                    attributes: ["id", "firstname", "lastname", "image"],
+                },
             },
             {
                 model: models.User,
                 attributes: ["id", "firstname", "lastname"],
-                as: "likedBy",
+                as: "sharedBy",
             },
         ],
     })
@@ -38,10 +46,18 @@ module.exports = async (req, res, next) => {
                 post.User["image"] =
                     "http://" + host + "/images/users/" + post.User.image;
 
-                post["image"] =
-                    "http://" + host + "/images/posts/" + post.image;
+                if (post.image) {
+                    post["image"] =
+                        "http://" + host + "/images/posts/" + post.image;
+                }
 
-                console.log(post);
+                post.Comments.forEach((comment) => {
+                    comment.User["image"] =
+                        "http://" +
+                        host +
+                        "/images/users/" +
+                        comment.User.image;
+                });
             });
 
             return res.status(200).json(posts);

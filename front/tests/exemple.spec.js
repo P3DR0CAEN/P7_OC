@@ -1,11 +1,19 @@
-import { mount } from "@vue/test-utils";
-import Component from "../src/views/";
+import "../src/interceptors/axios";
+import apiLogin from "../src/api/user/user.login";
+import { test, expect } from "vitest";
 
-test("sets the value", async () => {
-    const wrapper = mount(Component);
-    const input = wrapper.find("input");
+test("login post", async () => {
+    const data = {
+        email: "test1@test.fr",
+        password: "test1@test.fr",
+    };
 
-    await input.setValue("my@mail.com");
-
-    expect(input.element.value).toBe("my@mail.com");
+    const login = await apiLogin(data)
+        .then((response) => {
+            return response.data.token;
+        })
+        .catch((error) => {
+            return error;
+        });
+    expect(login).toBeTypeOf("string");
 });
