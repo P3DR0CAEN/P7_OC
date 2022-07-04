@@ -55,6 +55,13 @@ const emojiPicker = () => {
     });
 };
 
+const updatePostPreviewImg = () => {
+    document.getElementById("postPreviewImg").src = window.URL.createObjectURL(
+        inputPostImage.value.files[0]
+    );
+    document.getElementById("postPreviewImg").style.display = "block";
+};
+
 onMounted(async () => {
     updatePosts();
 
@@ -77,12 +84,19 @@ onMounted(async () => {
                     v-model="NewPost.content"
                     id="new_post__content"
                 ></textarea>
+                <img
+                    id="postPreviewImg"
+                    class="postPreviewImg"
+                    src="#"
+                    alt="your image"
+                />
                 <input
                     type="file"
                     hidden
                     name="post_image"
                     id="post_image"
                     ref="inputPostImage"
+                    @change="updatePostPreviewImg()"
                 />
                 <div class="new_post__actions">
                     <div class="icons">

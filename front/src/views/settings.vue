@@ -4,19 +4,18 @@ import { ref, reactive } from "vue";
 import { useStoreUser } from "../store";
 import apiUpdateUser from "../api/user/user.update";
 
-const user = useStoreUser();
+const authUser = useStoreUser();
 
 const inputUserImage = ref(null);
 
 const dataForm = reactive({
-    firstName: user.data.firstname,
-    lastName: user.data.lastname,
-    email: user.data.email,
+    firstName: authUser.data.firstname,
+    lastName: authUser.data.lastname,
+    email: authUser.data.email,
+    image: authUser.data.image,
 });
 
 function updateUserInfos() {
-    var uploadUserImage = document.querySelector("#user_image");
-
     const data = {
         firstName: dataForm.firstName,
         lastName: dataForm.lastName,
@@ -25,27 +24,43 @@ function updateUserInfos() {
     };
     apiUpdateUser(data)
         .then((response) => {
-            user.refresh();
+            authUser.refresh();
         })
         .catch((error) => {
             console.log(error);
         });
 }
+
+const updateUserPreviewImg = () => {
+    document.getElementById("userPreviewImg").src = window.URL.createObjectURL(
+        inputUserImage.value.files[0]
+    );
+};
 </script>
 
 <template>
     <div class="settings">
         <h1 class="profil__title">Mes informations :</h1>
-        <div class="form-row">
-            image:
+        image:
+        <div class="profil__image">
+            <img
+                :src="dataForm.image"
+                id="userPreviewImg"
+                alt="image utilisateur"
+            />
+            <label class="user_image_btn" for="user_image"
+                ><i class="las la-edit"></i
+            ></label>
             <input
                 type="file"
                 name="user_image"
                 id="user_image"
                 ref="inputUserImage"
-                style="flex: inherit"
+                hidden
+                @change="updateUserPreviewImg()"
             />
         </div>
+        <div class="form-row"></div>
         <div class="form-row">
             Prénom:
             <input
