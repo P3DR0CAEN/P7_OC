@@ -1,17 +1,58 @@
-.button {
-    text-align: center;
-    border: none;
-    border-radius: $space;
-    background-color: $color-tertiary;
+.c-button {
+    position: relative;
+    display: flex;
     color: $color-white;
-    padding: $space-tiny $space-small;
     width: fit-content;
-    font-weight: bold;
-    &:hover {
-        background-color: lighten($color-tertiary, 10);
-        cursor: pointer;
+    &::before {
+        content: "";
+        position: absolute;
+        height: calc(100% - 4px);
+        width: calc(100% - 4px);
+        top: 2px;
+        left: 2px;
+        background-color: $color-tertiary;
+        clip-path: polygon(100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px, 5px 0);
     }
-    &.active {
-        background-color: $color-primary;
+    .left {
+        position: relative;
+        padding: $space-tiny $space-small;
+        &.active {
+            color: $color-primary;
+        }
+    }
+    .right {
+        position: relative;
+        padding: $space-tiny $space-small;
+        background: $color-primary;
+        clip-path: polygon(100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px, 5px 0);
+        &::before {
+            content: "";
+            position: absolute;
+            height: calc(100% - 4px);
+            width: calc(100% - 4px);
+            top: 2px;
+            left: 2px;
+            background-color: $color-tertiary;
+            clip-path: polygon(100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px, 5px 0);
+            z-index: -1;
+        }
+    }
+    &:hover {
+        cursor: pointer;
+        .left {
+            color: $color-primary;
+        }
+    }
+    &.alt {
+        padding: $space-tiny $space-small;
+        background: $color-primary;
+        clip-path: polygon(100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px, 5px 0);
+        &:hover {
+            cursor: pointer;
+            color: $color-primary;
+        }
+        &::before {
+            z-index: -1;
+        }
     }
 }

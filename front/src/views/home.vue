@@ -59,7 +59,12 @@ const updatePostPreviewImg = () => {
     document.getElementById("postPreviewImg").src = window.URL.createObjectURL(
         inputPostImage.value.files[0]
     );
-    document.getElementById("postPreviewImg").style.display = "block";
+    document.querySelector(".postPreviewImg").style.display = "block";
+};
+
+const removePostPreviewImg = () => {
+    document.getElementById("post_image").value = null;
+    document.querySelector(".postPreviewImg").style.display = "none";
 };
 
 onMounted(async () => {
@@ -83,13 +88,18 @@ onMounted(async () => {
                     rows="5"
                     v-model="NewPost.content"
                     id="new_post__content"
+                    placeholder="Quoi de neuf ?"
                 ></textarea>
-                <img
-                    id="postPreviewImg"
-                    class="postPreviewImg"
-                    src="#"
-                    alt="your image"
-                />
+                <div class="postPreviewImg">
+                    <div
+                        class="postPreviewImgRemove"
+                        @click="removePostPreviewImg()"
+                    >
+                        <i class="las la-times-circle"></i>
+                    </div>
+                    <img id="postPreviewImg" src="#" alt="your image" />
+                </div>
+
                 <input
                     type="file"
                     hidden
@@ -105,7 +115,12 @@ onMounted(async () => {
                         ></label>
                         <i id="emoji-button" class="las la-smile"></i>
                     </div>
-                    <button class="button" @click="createPost()">Poster</button>
+                    <div class="c-button" @click="createPost()">
+                        <div class="left">Poster</div>
+                        <div class="right">
+                            <i class="las la-paper-plane"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

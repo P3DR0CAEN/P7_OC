@@ -1,51 +1,85 @@
 .Page_Home, .Page_Profil {
 
-    .content {
-        background-color: $color-secondary;
+    > .content .content {
         flex: 1 1 40%;
         padding: $space;
         display: flex;
         flex-direction: column;
         gap: $space-large;
         .new_post{
-            background-color: $color-white;
-            border-radius: $space-small;
+            position: relative;
+            background-color: $color-primary;
             display: flex;
             gap: $space-small;
             padding: $space-small;
+            clip-path: polygon(100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px, 15px 0);
+            &::before {
+                content: "";
+                position: absolute;
+                top: 4px;
+                left: 4px;
+                height: calc(100% - 8px);
+                width: calc(100% - 8px);
+                background-color: $color-white;
+                clip-path: polygon(100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px, 15px 0);
+            }
             .new_post__left {
+                z-index: 1;
                 .user_icon {
                     position: relative;
                     height: 50px;
                     width: 50px;
+                    clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
+                    background-color: $color-primary;
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        width: calc(100% - 4px);
+                        height: calc(100% - 4px);
+                        top: 2px;
+                        left: 2px;
+                        clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
+                        background-color: $color-white;
+                    }
                     img {
                         position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        height: 100%;
+                        width: calc(100% - 4px);
+                        height: calc(100% - 4px);
+                        top: 2px;
+                        left: 2px;
                         -o-object-fit: cover;
                         object-fit: cover;
-                        border-radius: 50%;
+                        clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
                     }
                 }
             }
             .new_post__content {
+                z-index: 1;
                 width: 100%;
                 display: flex;
                 flex-direction: column;
                 gap: $space-small;
                 textarea {
-                    border-radius: $space-small;
                     padding: $space-small;
                     width: -webkit-fill-available;
                 }
                 .postPreviewImg {
+                    position: relative;
                     display: none;
-                    max-width: 100%;
-                    width: fit-content;
-                    max-height: 280px;
-                    margin: 0 auto;
+                    .postPreviewImgRemove {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        background-color: $color-white;
+                        padding: 2px;
+                        border-radius: 50%;
+                    }
+                    img {
+                        max-width: 100%;
+                        width: fit-content;
+                        max-height: 280px;
+                        margin: 0 auto;
+                    }
                 }
                 .new_post__actions {
                     display: flex;
@@ -67,186 +101,6 @@
             display: flex;
             flex-direction: column;
             gap: 40px;
-            .post {
-                position: relative;
-                background-color: $color-white;
-                border-radius: $space-small;
-                display: flex;
-                gap: $space-small;
-                padding: $space-small;
-                .post__share {
-                    position: absolute;
-                    top: -11px;
-                    background: white;
-                    padding: 3px 6px;
-                    border-radius: 100px;
-                    font-size: $font-Small;
-                    font-weight: normal;
-                    color: gray;
-                }
-                .post__remove {
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    &:hover {
-                        cursor: pointer;
-                    }
-                }
-                .post__left {
-                    .user_icon {
-                        position: relative;
-                        height: 50px;
-                        width: 50px;
-                        img {
-                            position: absolute;
-                            left: 0;
-                            top: 0;
-                            width: 100%;
-                            height: 100%;
-                            -o-object-fit: cover;
-                            object-fit: cover;
-                            border-radius: 50%;
-                        }
-                    }
-                }
-                .post__content {
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    gap: $space;
-                    .post__content__user_name {
-                        font-weight: bold;
-                    }
-                    .post__content__date {
-                        font-size: $font-Small;
-                        font-weight: normal;
-                        color: gray;
-                    }
-                    .post__content__text {
-
-                    }
-                    .post__content__image {
-                        width: 100%;
-                        text-align: center;
-                        img {
-                            max-width: 100%;
-                            max-height: 280px;
-                        }
-                    }
-                    .post__content__actions {
-                        display: flex;
-                        flex-direction: row;
-                        gap: $space-large;
-                        >div {
-                            flex: 1 1 0;
-                            text-align: center;
-                            border-radius: $space;
-                            background-color: $color-tertiary;
-                            color: $color-white;
-                            padding: $space-tiny;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            gap: 3px;
-                            &:hover {
-                                cursor: pointer;
-                                background-color: lighten($color-tertiary, 10);
-                            }
-                            &.active {
-                                background-color: $color-primary;
-                            }
-                            span {
-                                font-size: $font-SMALL;
-                            }
-
-                        }
-                    }
-
-                    .comments {
-                        display: none;
-                        .comment-new {
-                            display: flex;
-                            .comment-new__user__img {
-                                position: relative;
-                                width: 50px;
-                                height: 50px;
-                                img {
-                                    position: absolute;
-                                    left: 0;
-                                    top: 0;
-                                    width: 100%;
-                                    height: 100%;
-                                    -o-object-fit: cover;
-                                    object-fit: cover;
-                                    border-radius: 50%;
-                                }
-                            }
-                            .comment-new__content {
-                                width: 100%;
-                                .comment-new__content__username {
-                                    font-weight: bold;
-                                    margin-bottom: $space-small;
-                                }   
-                                textarea {
-                                    width: -webkit-fill-available;
-                                    border-radius: $space-small;
-                                    padding: $space-small;
-                                }
-                                .button {
-                                    float: right;
-                                    margin-top: $space-tiny;
-                                }
-                            }
-                        }
-
-                        .comment-list {
-                            hr {
-                                margin: $space-small 0;
-                            }
-                            .comment {
-                                position: relative;
-                                display: flex;
-                                .comment__remove {
-                                    position: absolute;
-                                    top: 0;
-                                    right: 10px;
-                                    &:hover {
-                                        cursor: pointer;
-                                    }
-                                }
-                                .comment__user__image {
-                                    position: relative;
-                                    width: 50px;
-                                    height: 50px;
-                                    img {
-                                        position: absolute;
-                                        left: 0;
-                                        top: 0;
-                                        width: 100%;
-                                        height: 100%;
-                                        -o-object-fit: cover;
-                                        object-fit: cover;
-                                        border-radius: 50%;
-                                    }
-                                }
-                                .comment__content {
-                                    width: 100%;
-                                    .comment__content__username {
-                                        font-weight: bold;
-                                        margin-bottom: $space-small;
-                                    }
-                                    .comment__content__text {
-
-                                    }
-                                    .comment__content__image {
-                                        
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 }

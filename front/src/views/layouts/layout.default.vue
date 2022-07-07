@@ -4,7 +4,6 @@ import CFooter from "@/views/components/footer.vue";
 
 import { RouterLink } from "vue-router";
 import router from "../../router";
-import axios from "axios";
 
 import { useStoreUser } from "../../store";
 
@@ -14,9 +13,9 @@ defineProps({
 
 console.log("layoutdefault");
 
-const user = useStoreUser();
+const authUser = useStoreUser();
 
-user.refresh();
+authUser.refresh();
 
 function logout() {
     localStorage.removeItem("AuthToken");
@@ -26,36 +25,49 @@ function logout() {
 </script>
 
 <template>
-    <div v-if="user.data === undefined">chargement de la page</div>
-    <div v-else-if="user.data == null"></div>
+    <div v-if="authUser.data === undefined">chargement de la page</div>
+    <div v-else-if="authUser.data == null"></div>
     <div v-else>
         <c-header></c-header>
         <main :class="mainClass">
             <div class="left">
                 <div class="left__content">
                     <div class="user_icon">
-                        <img :src="user.data.image" alt="" />
+                        <img :src="authUser.data.image" alt="" />
                     </div>
                     <div class="name">
-                        {{ user.data.firstName }}
-                        {{ user.data.lastName }}
+                        <span>
+                            {{ authUser.data.firstname }}
+                            {{ authUser.data.lastname }}
+                        </span>
+                        <hr />
+                        {{ authUser.data.email }}
                     </div>
                     <div class="menu">
-                        <RouterLink class="menu__item" :to="{ name: 'home' }">
-                            <i class="las la-home"></i>Accueil
+                        <RouterLink class="c-button" :to="{ name: 'home' }">
+                            <div class="left">Accueil</div>
+                            <div class="right">
+                                <i class="las la-home"></i>
+                            </div>
                         </RouterLink>
-                        <RouterLink class="menu__item" :to="{ name: 'profil' }"
-                            ><i class="las la-user"></i> Profil</RouterLink
-                        >
-                        <RouterLink
-                            class="menu__item"
-                            :to="{ name: 'settings' }"
-                        >
-                            <i class="las la-cog"></i>Paramètres
+                        <RouterLink class="c-button" :to="{ name: 'profil' }">
+                            <div class="left">Profil</div>
+                            <div class="right">
+                                <i class="las la-user"></i>
+                            </div>
                         </RouterLink>
-                        <button @click="logout" class="button">
-                            Déconnexion
-                        </button>
+                        <RouterLink class="c-button" :to="{ name: 'settings' }">
+                            <div class="left">Paramètres</div>
+                            <div class="right">
+                                <i class="las la-cog"></i>
+                            </div>
+                        </RouterLink>
+                        <div @click="logout" class="c-button">
+                            <div class="left">Déconnexion</div>
+                            <div class="right">
+                                <i class="las la-power-off"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

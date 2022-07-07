@@ -124,38 +124,47 @@ const deleteComment = function (id) {
             </div>
 
             <div class="post__content__actions">
-                <div
-                    class="post__content__actions__like"
-                    v-bind:class="
-                        post.likedBy.filter((e) => e.id === authUser.data.id)
-                            .length > 0
-                            ? 'active'
-                            : ''
-                    "
-                    @click="likePost(post.id)"
-                >
-                    <i class="las la-thumbs-up"></i>
-                    <span> ( {{ post.likedBy.length }} ) </span>
+                <div class="c-button" @click="likePost(post.id)">
+                    <div
+                        class="left"
+                        v-bind:class="
+                            post.likedBy.filter(
+                                (e) => e.id === authUser.data.id
+                            ).length > 0
+                                ? 'active'
+                                : ''
+                        "
+                    >
+                        <i class="las la-thumbs-up"></i>
+                    </div>
+                    <div class="right">
+                        {{ post.likedBy.length }}
+                    </div>
                 </div>
-                <div
-                    class="post__content__actions__comment"
-                    @click="viewComments(post.id)"
-                >
-                    <i class="las la-comment-alt"></i>
-                    <span> ( {{ post.Comments.length }} ) </span>
+                <div class="c-button" @click="viewComments(post.id)">
+                    <div class="left">
+                        <i class="las la-comment-alt"></i>
+                    </div>
+                    <div class="right">
+                        {{ post.Comments.length }}
+                    </div>
                 </div>
-                <div
-                    class="post__content__actions__share"
-                    v-bind:class="
-                        post.sharedBy.filter((e) => e.id === authUser.data.id)
-                            .length > 0
-                            ? 'active'
-                            : ''
-                    "
-                    @click="sharePost(post.id)"
-                >
-                    <i class="las la-share"></i>
-                    <span> ( {{ post.sharedBy.length }} ) </span>
+                <div class="c-button" @click="sharePost(post.id)">
+                    <div
+                        class="left"
+                        v-bind:class="
+                            post.sharedBy.filter(
+                                (e) => e.id === authUser.data.id
+                            ).length > 0
+                                ? 'active'
+                                : ''
+                        "
+                    >
+                        <i class="las la-share"></i>
+                    </div>
+                    <div class="right">
+                        {{ post.sharedBy.length }}
+                    </div>
                 </div>
             </div>
             <div class="comments" :data-comments-id="post.id">
@@ -177,13 +186,15 @@ const deleteComment = function (id) {
                             rows="3"
                             placeholder="nouveau commentaire ..."
                         ></textarea>
-                        <button class="button" @click="createComment(post.id)">
-                            Envoyer
-                        </button>
+                        <div class="c-button" @click="createComment(post.id)">
+                            <div class="left">Envoyer</div>
+                            <div class="right">
+                                <i class="las la-paper-plane"></i>
+                            </div>
+                        </div>
                     </div>
                 </form>
                 <div class="comment-list" v-for="comment in post.Comments">
-                    <hr />
                     <div class="comment">
                         <div
                             v-if="comment.User.id == authUser.data.id"

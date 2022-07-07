@@ -96,16 +96,16 @@ async function login() {
             />
         </div>
         <div class="form-row">
-            <button
+            <div
                 @click="login()"
-                class="button"
+                class="c-button alt"
                 v-if="mode.value == 'login'"
             >
-                <span>Connexion</span>
-            </button>
-            <button @click="register()" class="button" v-else>
-                <span>Créer mon compte</span>
-            </button>
+                Connexion
+            </div>
+            <div @click="register()" class="c-button alt" v-else>
+                Créer mon compte
+            </div>
         </div>
         <div id="respError" style="color: red; text-align: center"></div>
     </div>

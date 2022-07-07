@@ -1,0 +1,219 @@
+.post {
+    position: relative;
+    display: flex;
+    gap: $space-small;
+    padding: $space-small;
+    padding-bottom: 0;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: $color-primary;
+        clip-path: polygon(100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px, 15px 0);
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        height: calc(100% - 8px);
+        width: calc(100% - 8px);
+        background-color: $color-white;
+        clip-path: polygon(100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px, 15px 0);
+    }
+    .post__share {
+        z-index: 2;
+        position: absolute;
+        bottom: -7px;
+        padding: 3px 6px;
+        font-size: $font-Small;
+        font-weight: normal;
+        color: gray;
+        background-color: $color-primary;
+        clip-path: polygon(100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px, 5px 0);
+        &::before {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            height: calc(100% - 4px);
+            width: calc(100% - 4px);
+            background-color: $color-white;
+            clip-path: polygon(100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px, 5px 0);
+        }
+    }
+    .post__remove {
+        z-index: 2;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .post__left {
+        z-index: 1;
+        .user_icon {
+            position: relative;
+            height: 50px;
+            width: 50px;
+            clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
+            background-color: $color-primary;
+            &::before {
+                content: "";
+                position: absolute;
+                width: calc(100% - 4px);
+                height: calc(100% - 4px);
+                top: 2px;
+                left: 2px;
+                clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
+                background-color: $color-white;
+            }
+            img {
+                position: absolute;
+                width: calc(100% - 4px);
+                height: calc(100% - 4px);
+                top: 2px;
+                left: 2px;
+                -o-object-fit: cover;
+                object-fit: cover;
+                clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
+            }
+        }
+    }
+    .post__content {
+        z-index: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: $space;
+        .post__content__user_name {
+            font-weight: bold;
+        }
+        .post__content__date {
+            font-size: $font-Small;
+            font-weight: normal;
+            color: gray;
+        }
+        .post__content__text {
+
+        }
+        .post__content__image {
+            width: 100%;
+            text-align: center;
+            img {
+                max-width: 100%;
+                max-height: 280px;
+            }
+        }
+        .post__content__actions {
+            transform: translate(-4px, 12px);
+            display: flex;
+            flex-direction: row;
+            gap: 24px;
+            justify-content: flex-end;
+            &::before {
+                content: "";
+                position: absolute;
+                width: calc(100%);
+                bottom: 50%;
+                border-bottom: 1px solid $color-primary;
+            }
+        }
+
+        .comments {
+            display: none;
+            margin-bottom: $space;
+            .comment-new {
+                display: flex;
+                margin-bottom: $space;
+                .comment-new__user__img {
+                    position: relative;
+                    width: 50px;
+                    height: 50px;
+                    img {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        -o-object-fit: cover;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+                }
+                .comment-new__content {
+                    width: 100%;
+                    .comment-new__content__username {
+                        font-weight: bold;
+                        margin-bottom: $space-small;
+                    }   
+                    textarea {
+                        width: -webkit-fill-available;
+                        padding: $space-small;
+                    }
+                    .c-button {
+                        float: right;
+                        margin-top: $space-tiny;
+                    }
+                }
+            }
+
+            .comment-list {
+                .comment {
+                    position: relative;
+                    display: flex;
+                    padding: $space 0;
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        right: -12px;
+                        width: calc(100% + 12px);
+                        border-top: 1px solid $color-primary;
+                    }
+                    .comment__remove {
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                    .comment__user__image {
+                        position: relative;
+                        width: 50px;
+                        height: 50px;
+                        img {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            -o-object-fit: cover;
+                            object-fit: cover;
+                            border-radius: 50%;
+                        }
+                    }
+                    .comment__content {
+                        width: 100%;
+                        .comment__content__username {
+                            font-weight: bold;
+                            margin-bottom: $space-small;
+                        }
+                        .comment__content__text {
+
+                        }
+                        .comment__content__image {
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,6 +1,5 @@
 .Page_Auth {
     height: 100vh;
-    background-color: $color-secondary;
     .form {
         position: absolute;
         top: 50%;
@@ -12,7 +11,19 @@
         background-color: white;
         width: fit-content;
         padding: 24px;
-        border-radius: $space;
+        clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
+        background-color: $color-primary;
+        &::before {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            width: calc(100% - 4px);
+            height: calc(100% - 4px);
+            top: 2px;
+            left: 2px;
+            clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
+            background-color: $color-white;
+        }
         .form__title {
             color: $color-primary;
             font-weight: bold;
@@ -36,7 +47,7 @@
                 border: 1px solid $color-tertiary;
                 border-radius: $space-small;
             }
-            button {
+            .c-button {
                 margin: 0 auto;
             }
         }

@@ -2,43 +2,84 @@
 
     .content {
         .profil__banner {
-            background-color: $color-tertiary;
-            margin: -$space-large;
-            margin-bottom: $space;
+            position: relative;
             display: flex;
-            padding: 0 $space-large;
-            height: 150px;
-            align-items: flex-end;
-            gap: $space;
-            .profil__picture {
+            margin: 0 -$space;
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: $color-primary;
+                clip-path: polygon(100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px, 15px 0);
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                top: 4px;
+                left: 4px;
+                height: calc(100% - 8px);
+                width: calc(100% - 8px);
                 background-color: $color-white;
-                border-radius: 50%;
-                transform: translateY(50%);
+                clip-path: polygon(100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px, 15px 0);
+            }
+            .profil__banner__picture {
+                z-index: 1;
                 position: relative;
-                height: 75px;
-                width: 75px;
-                img {
-                    position: absolute;
-                    width: calc(100% - 10px);
-                    height: calc(100% - 10px);
-                    top: 5px;
-                    left: 5px;
-                    -o-object-fit: cover;
-                    object-fit: cover;
-                    border-radius: 50%;
+                display: flex;
+                align-items: center;
+                .profil__banner__picture__img {
+                    position: relative;
+                    height: 100px;
+                    width: 100px;
+                    margin: $space-small;
+                    clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
+                    background-color: $color-primary;
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        width: calc(100% - 4px);
+                        height: calc(100% - 4px);
+                        top: 2px;
+                        left: 2px;
+                        clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
+                        background-color: $color-white;
+                    }
+                    img {
+                        position: absolute;
+                        width: calc(100% - 4px);
+                        height: calc(100% - 4px);
+                        top: 2px;
+                        left: 2px;
+                        -o-object-fit: cover;
+                        object-fit: cover;
+                        clip-path: polygon(100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px, 10px 0);
+                    }
+                }
+                
+            }
+            .profil__banner__content {
+                flex: 1 1 0;
+                z-index: 1;
+                padding: $space;
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+                .profil__banner__content__infos {
+                    span {
+                        font-weight: bold;
+                    }
+                }
+                .profil__banner__content__buttons {
+                    display: flex;
+                    justify-content: flex-start;
+                    gap: $space;
                 }
             }
-            .profil__name {
-                background-color: $color-white;
-                border-radius: 100px;
-                padding: $space-tiny $space-small;
-                transform: translateY(50%);
-                height: fit-content;
-            }
+            
         }
-        .profil__buttons {
-            display: flex;
-            justify-content: space-between;
-        }
+        
     }
 }

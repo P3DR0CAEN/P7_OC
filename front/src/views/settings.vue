@@ -79,9 +79,9 @@ const updateUserPreviewImg = () => {
         </div>
 
         <div class="form-row">
-            <button class="button" @click="updateUserInfos()">
+            <div class="c-button alt" @click="updateUserInfos()">
                 Mettre à jour
-            </button>
+            </div>
         </div>
     </div>
 </template>

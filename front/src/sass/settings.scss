@@ -2,15 +2,6 @@
 ///* ========================================================================
 //   #GLOBAL
 //   ======================================================================== */
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Lato', sans-serif;
-    a {
-        color: inherit;
-        text-decoration: none;
-    }
-}
 
 $space-tiny: 6px;
 $space-small: 12px;
@@ -28,6 +19,7 @@ $color-secondary: #FFD7D7;
 $color-tertiary: #4E5166;
 $color-white: #ffffff;
 $color-black: #000000;
+$color-grey: #E6E6E6;
 
 
 ///* ========================================================================
@@ -76,4 +68,24 @@ $font-SMALL: 0.625rem; //10
     @media (min-width: 1300px) {
         @content;
     }
+}
+
+/* setting global site */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+html {
+    background-color: $color-grey;
+    background-image: url('/src/assets/icon-planet.svg');
+    background-repeat: no-repeat;
+    background-position: right -300px bottom 50%;
+    background-attachment: fixed;
+    background-size: 600px;
 }

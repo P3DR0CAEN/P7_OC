@@ -1,11 +1,17 @@
 header {
-    padding: $space;
-    background-color: red;
+    padding: $space-small;
+    background-color: $color-white;
     .img-background {
+        position: relative;
         background-color: $color-white;
-        padding: $space-small $space;
-        max-width: 200px;
-        border-radius: $space;
+        width: 260px;
+        height: 50px;
         margin: 0 auto;
+        svg {
+            position: absolute;
+            height: auto !important;
+            top: 50%;
+            transform: translateY(-54%) !important;
+        }
     }
 }
