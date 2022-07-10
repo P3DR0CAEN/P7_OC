@@ -1,5 +1,6 @@
 import apiRegister from "../src/api/user/user.signup";
 import apiLogin from "../src/api/user/user.login";
+import axios from "../src/lib/axios";
 import axiosTestUnit from "../src/lib/axiosTestUnit";
 import { test, expect } from "vitest";
 
@@ -33,6 +34,7 @@ test("login", async () => {
     const login = await apiLogin(data)
         .then((response) => {
             authToken = response.data.token;
+            console.log("authToken :" + authToken);
             return response.data.token;
         })
         .catch((error) => {
@@ -45,15 +47,14 @@ test("create post", async () => {
     // fail tests Unit
     const data = {
         content: "test de post 1",
-        image: undefined,
     };
 
     console.log(data);
 
-    const createPost = await axiosTestUnit(authToken)
-        .post("post/create", data, {
+    const createPost = await axios()
+        .postForm("post/create", data, {
             headers: {
-                "Content-Type": `multipart/form-data`,
+                Authorization: `Bearer ${authToken}`,
             },
         })
         .then((response) => {

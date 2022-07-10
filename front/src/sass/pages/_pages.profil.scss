@@ -4,7 +4,9 @@
         .profil__banner {
             position: relative;
             display: flex;
-            margin: 0 -$space;
+            @include tablet() {
+                margin: 0 -$space;
+            }
             &::before {
                 content: "";
                 position: absolute;
@@ -63,10 +65,13 @@
             .profil__banner__content {
                 flex: 1 1 0;
                 z-index: 1;
-                padding: $space;
+                padding: 24px 12px 24px 0;
                 display: flex;
                 flex-direction: column;
                 gap: 24px;
+                @include tablet() {
+                    padding: $space;
+                }
                 .profil__banner__content__infos {
                     span {
                         font-weight: bold;
@@ -74,8 +79,12 @@
                 }
                 .profil__banner__content__buttons {
                     display: flex;
+                    flex-direction: column;
                     justify-content: flex-start;
                     gap: $space;
+                    @include wide() {
+                        flex-direction: row;
+                    }
                 }
             }
             

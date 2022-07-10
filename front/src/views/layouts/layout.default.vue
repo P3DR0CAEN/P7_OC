@@ -30,8 +30,8 @@ function logout() {
     <div v-else>
         <c-header></c-header>
         <main :class="mainClass">
-            <div class="left">
-                <div class="left__content">
+            <div class="leftSidebar">
+                <div class="leftSidebar__content">
                     <div class="user_icon">
                         <img :src="authUser.data.image" alt="" />
                     </div>
@@ -74,8 +74,34 @@ function logout() {
             <div class="content">
                 <slot />
             </div>
-            <div class="right"></div>
+            <div class="rightSidebar"></div>
         </main>
+        <div class="mobile-menu">
+            <RouterLink class="c-mobile-button" :to="{ name: 'home' }">
+                <div class="icon">
+                    <i class="las la-home"></i>
+                </div>
+                <div class="text">Accueil</div>
+            </RouterLink>
+            <RouterLink class="c-mobile-button" :to="{ name: 'profil' }">
+                <div class="icon">
+                    <i class="las la-user"></i>
+                </div>
+                <div class="text">Profil</div>
+            </RouterLink>
+            <RouterLink class="c-mobile-button" :to="{ name: 'settings' }">
+                <div class="icon">
+                    <i class="las la-cog"></i>
+                </div>
+                <div class="text">Paramètres</div>
+            </RouterLink>
+            <div @click="logout" class="c-mobile-button">
+                <div class="icon">
+                    <i class="las la-power-off"></i>
+                </div>
+                <div class="text">Déconnexion</div>
+            </div>
+        </div>
         <c-footer />
     </div>
 </template>

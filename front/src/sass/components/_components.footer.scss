@@ -1,6 +1,10 @@
 footer {
     padding: $space;
+    padding-bottom: 128px;
     background-color: red;
     color: white;
     text-align: center;
+    @include tablet() {
+        padding-bottom: $space;
+    }
 }

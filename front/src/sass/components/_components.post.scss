@@ -3,7 +3,11 @@
     display: flex;
     gap: $space-small;
     padding: $space-small;
+    padding-top: $space;
     padding-bottom: 0;
+    @include wide() {
+        padding-top: $space-small;
+    }
     &::before {
         content: "";
         position: absolute;
@@ -27,13 +31,17 @@
     .post__share {
         z-index: 2;
         position: absolute;
-        bottom: -7px;
+        top: -8px;
         padding: 3px 6px;
         font-size: $font-Small;
         font-weight: normal;
         color: gray;
         background-color: $color-primary;
         clip-path: polygon(100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px, 5px 0);
+        @include wide() {
+            top: inherit;
+            bottom: -7px;
+        }
         &::before {
             z-index: -1;
             content: "";
@@ -120,7 +128,7 @@
                 content: "";
                 position: absolute;
                 width: calc(100%);
-                bottom: 50%;
+                bottom: 43%;
                 border-bottom: 1px solid $color-primary;
             }
         }

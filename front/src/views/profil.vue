@@ -93,7 +93,9 @@ onMounted(async () => {
                             >
                                 Posts créés / partagés
                             </div>
-                            <div class="right">z</div>
+                            <div class="right">
+                                <i class="las la-share"></i>
+                            </div>
                         </div>
                         <div
                             class="c-button"
@@ -107,7 +109,9 @@ onMounted(async () => {
                             >
                                 Posts likés
                             </div>
-                            <div class="right">h</div>
+                            <div class="right">
+                                <i class="las la-thumbs-up"></i>
+                            </div>
                         </div>
                     </div>
                 </div>

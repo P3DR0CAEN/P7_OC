@@ -4,6 +4,8 @@ import logoJSON from "../../assets/Logo_Groupomania.json";
 
 <template>
     <header>
-        <Vue3Lottie :animationData="logoJSON" class="img-background" />
+        <a href="/">
+            <Vue3Lottie :animationData="logoJSON" class="img-background" />
+        </a>
     </header>
 </template>

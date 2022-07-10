@@ -5,8 +5,8 @@ module.exports = async (req, res, next) => {
     if (typeof req.file !== "undefined") {
         imageName = req.file.filename;
     }
-
-    console.log(req.body); // fail tests Unit
+    console.log("req : ", req); // fail tests
+    console.log("req.body : ", req.body); // fail tests Unit
 
     await models.Post.create(
         {
