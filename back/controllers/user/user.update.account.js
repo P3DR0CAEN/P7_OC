@@ -6,6 +6,23 @@ module.exports = async (req, res, next) => {
         imageName = req.file.filename;
     }
 
+    if (req.body.firstName == "") {
+        req.body.firstName = null;
+    }
+    if (req.body.lastName == "") {
+        req.body.lastName = null;
+    }
+    if (req.body.email == "") {
+        req.body.email = null;
+    }
+
+    const format_email = /\S+@\S+\.\S+/;
+    if (!format_email.test(req.body.email)) {
+        return res.status(500).json({
+            error: "Veuillez entrer une adresse email valide.",
+        });
+    }
+
     await models.User.update(
         {
             firstName: req.body.firstName,
@@ -24,6 +41,17 @@ module.exports = async (req, res, next) => {
             return res.status(200).json({ message: "Profil mis à jour !" });
         })
         .catch((error) => {
+            if (
+                typeof error.errors !== "undefined" &&
+                error.errors[0].type == "notNull Violation"
+            ) {
+                return res.status(500).json({
+                    error:
+                        "Le champ " +
+                        error.errors[0].path +
+                        " ne peut pas être vide !",
+                });
+            }
             return res.status(401).json({ error: "Utilisateur non trouvé !" });
         });
 };

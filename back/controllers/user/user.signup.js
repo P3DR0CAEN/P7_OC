@@ -2,7 +2,17 @@ const { models } = require("../../sequelize");
 const bcrypt = require("bcrypt");
 
 module.exports = async (req, res, next) => {
-    format_email = /\S+@\S+\.\S+/;
+    if (req.body.firstName == "") {
+        req.body.firstName = null;
+    }
+    if (req.body.lastName == "") {
+        req.body.lastName = null;
+    }
+    if (req.body.email == "") {
+        req.body.email = null;
+    }
+
+    const format_email = /\S+@\S+\.\S+/;
     if (!format_email.test(req.body.email)) {
         return res.status(500).json({
             error: "Veuillez entrer une adresse email valide.",
@@ -45,10 +55,17 @@ module.exports = async (req, res, next) => {
                         typeof error.errors !== "undefined" &&
                         error.errors[0].type == "notNull Violation"
                     ) {
+                        let ErrorNameFr = null;
+                        if (error.errors[0].path == "firstName") {
+                            ErrorNameFr = "Prénom";
+                        }
+                        if (error.errors[0].path == "lastName") {
+                            ErrorNameFr = "Nom";
+                        }
                         return res.status(500).json({
                             error:
                                 "Le champ " +
-                                error.errors[0].path +
+                                ErrorNameFr +
                                 " ne peut pas être vide !",
                         });
                     }

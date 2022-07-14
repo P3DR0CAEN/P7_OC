@@ -24,10 +24,20 @@ function updateUserInfos() {
     };
     apiUpdateUser(data)
         .then((response) => {
+            document
+                .querySelectorAll(".response__error")
+                .forEach((el) => el.remove());
             authUser.refresh();
         })
         .catch((error) => {
-            console.log(error);
+            document
+                .getElementById("button")
+                .insertAdjacentHTML(
+                    "afterend",
+                    '<div class="response__error">' +
+                        error.response.data.error +
+                        "</div>"
+                );
         });
 }
 
@@ -78,7 +88,7 @@ const updateUserPreviewImg = () => {
             <input v-model="dataForm.email" type="text" placeholder="Email" />
         </div>
 
-        <div class="form-row">
+        <div class="form-row" id="button">
             <div class="c-button alt" @click="updateUserInfos()">
                 Mettre à jour
             </div>

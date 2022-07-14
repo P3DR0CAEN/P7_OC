@@ -166,6 +166,10 @@
                         width: -webkit-fill-available;
                         padding: $space-small;
                     }
+                    .response__error {
+                        margin: 6px 0;
+                        color: red;
+                    }
                     .c-button {
                         float: right;
                         margin-top: $space-tiny;

@@ -139,11 +139,21 @@ const createComment = function (id) {
     apiCommentCreate(data)
         .then((response) => {
             document.getElementById("newCommentTextarea" + id).value = "";
+            document
+                .querySelectorAll(".response__error")
+                .forEach((el) => el.remove());
             emit("updatePosts");
             return;
         })
         .catch((error) => {
-            console.log(error);
+            document
+                .getElementById("newCommentTextarea" + id)
+                .insertAdjacentHTML(
+                    "afterend",
+                    '<div class="response__error">' +
+                        error.response.data.error +
+                        "</div>"
+                );
         });
 };
 

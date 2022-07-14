@@ -28,10 +28,7 @@ module.exports = async (req, res, next) => {
                 error.errors[0].type == "notNull Violation"
             ) {
                 return res.status(500).json({
-                    error:
-                        "Le champ " +
-                        error.errors[0].path +
-                        " ne peut pas être vide !",
+                    error: "Le contenu ne peut pas être vide !",
                 });
             }
 

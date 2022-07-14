@@ -24,11 +24,21 @@ const createPost = function () {
     apiPostCreate(data)
         .then((response) => {
             NewPost.content = undefined;
+            document
+                .querySelectorAll(".response__error")
+                .forEach((el) => el.remove());
             updatePosts();
             return;
         })
         .catch((error) => {
-            console.log(error);
+            document
+                .getElementById("NewPostContent")
+                .insertAdjacentHTML(
+                    "afterend",
+                    '<div class="response__error">' +
+                        error.response.data.error +
+                        "</div>"
+                );
         });
 };
 
@@ -47,8 +57,8 @@ const emojiPicker = () => {
     const button = document.querySelector("#emoji-button");
     const picker = new EmojiButton();
     picker.on("emoji", (emoji) => {
-        document.querySelector("#new_post__content").value += emoji.emoji;
-        NewPost.content = document.querySelector("#new_post__content").value;
+        document.getElementById("NewPostContent").value += emoji.emoji;
+        NewPost.content = document.getElementById("NewPostContent").value;
     });
     button.addEventListener("click", () => {
         picker.pickerVisible ? picker.hidePicker() : picker.showPicker(button);
@@ -87,7 +97,7 @@ onMounted(async () => {
                     cols="30"
                     rows="5"
                     v-model="NewPost.content"
-                    id="new_post__content"
+                    id="NewPostContent"
                     placeholder="Quoi de neuf ?"
                 ></textarea>
                 <div class="postPreviewImg">
