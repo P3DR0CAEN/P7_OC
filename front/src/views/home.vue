@@ -24,6 +24,7 @@ const createPost = function () {
     apiPostCreate(data)
         .then((response) => {
             NewPost.content = undefined;
+            removePostPreviewImg();
             document
                 .querySelectorAll(".response__error")
                 .forEach((el) => el.remove());

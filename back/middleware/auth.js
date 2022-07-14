@@ -9,7 +9,6 @@ module.exports = async (req, res, next) => {
             token,
             process.env.USER_TOKEN_CONNEXION
         );
-        console.log(decodedToken);
         const userId = decodedToken.userId;
         req.userId = userId;
 

@@ -16,10 +16,6 @@ module.exports = (sequelize) => {
                 type: DataTypes.TEXT,
                 allowNull: false,
             },
-            image: {
-                type: DataTypes.STRING,
-                // allowNull defaults to true
-            },
             postId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,

@@ -27,7 +27,7 @@ module.exports = async (req, res, next) => {
             },
             {
                 model: models.Comment,
-                attributes: ["id", "content", "image", "created_at"],
+                attributes: ["id", "content", "created_at"],
                 include: {
                     model: models.User,
                     attributes: ["id", "firstname", "lastname", "image"],
