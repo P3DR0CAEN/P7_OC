@@ -186,10 +186,13 @@
                         width: calc(100% + 12px);
                         border-top: 1px solid $color-primary;
                     }
-                    .comment__remove {
+                    .comment__options {
+                        z-index: 2;
                         position: absolute;
                         top: 10px;
                         right: 10px;
+                        display: flex;
+                        gap: $space-tiny;
                         &:hover {
                             cursor: pointer;
                         }
@@ -223,9 +226,24 @@
                         .comment__content__text {
 
                         }
-                        .comment__content__image {
-                            
+                        .comment__content__edit {
+                            display: none;
+                            textarea {
+                                display: block;
+                                width: -webkit-fill-available;
+                                padding: $space-small;
+                            }
+                            .comment__content__edit__actions {
+                                padding-top: 12px;
+                                display: flex;
+                                justify-content: flex-end;
+                                gap: 24px;
+                            }
+                            &.active {
+                                display: block;
+                            }
                         }
+                        
                     }
                 }
             }

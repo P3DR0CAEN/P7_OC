@@ -14,6 +14,7 @@ const postLike = require("../controllers/post/post.like");
 const postShare = require("../controllers/post/post.share");
 
 const postCommentCreate = require("../controllers/post/post.comment.create");
+const postCommentUpdate = require("../controllers/post/post.comment.update");
 const postCommentDelete = require("../controllers/post/post.comment.delete");
 
 router.post(
@@ -34,6 +35,7 @@ router.post("/like/:id", auth, asyncHandler(postLike));
 router.post("/share/:id", auth, asyncHandler(postShare));
 
 router.post("/comment/create", auth, asyncHandler(postCommentCreate));
+router.post("/comment/update/:id", auth, asyncHandler(postCommentUpdate));
 router.post("/comment/delete/:id", auth, asyncHandler(postCommentDelete));
 
 module.exports = router;

@@ -4,6 +4,7 @@ import apiPostDelete from "../../api/post/post.delete";
 import apiPostShare from "../../api/post/post.share";
 import apiPostLike from "../../api/post/post.like";
 import apiCommentCreate from "../../api/post/post.comment.create";
+import apiCommentUpdate from "../../api/post/post.comment.update";
 import apiCommentDelete from "../../api/post/post.comment.delete";
 import { EmojiButton } from "@joeattardi/emoji-button";
 import moment from "moment";
@@ -23,24 +24,6 @@ const showPopupEditPost = function (id) {
 const hidePopupEditPost = function (id) {
     const popup = document.querySelector("#editPostPopup" + id);
     popup.classList.remove("visible");
-};
-
-const editPost = function (id) {
-    const data = {
-        postId: id,
-        content: document.querySelector("#editPostContent" + id).value,
-        image: document.querySelector("#editPostImageInput" + id).files[0],
-        removeImg: document.querySelector("#editPostRemoveImg" + id).value,
-    };
-
-    apiPostUpdate(data)
-        .then((response) => {
-            emit("updatePosts");
-            return;
-        })
-        .catch((error) => {
-            console.log(error);
-        });
 };
 
 const updateEditPostPreviewImg = (id) => {
@@ -68,6 +51,24 @@ const emojiPicker = (id) => {
     button.addEventListener("click", () => {
         picker.pickerVisible ? picker.hidePicker() : picker.showPicker(button);
     });
+};
+
+const editPost = function (id) {
+    const data = {
+        postId: id,
+        content: document.querySelector("#editPostContent" + id).value,
+        image: document.querySelector("#editPostImageInput" + id).files[0],
+        removeImg: document.querySelector("#editPostRemoveImg" + id).value,
+    };
+
+    apiPostUpdate(data)
+        .then((response) => {
+            emit("updatePosts");
+            return;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 };
 
 /* Delete post */
@@ -130,7 +131,7 @@ const viewComments = function (id) {
 };
 
 const createComment = function (id) {
-    const content = document.getElementById("comment_textarea_" + id).value;
+    const content = document.getElementById("newCommentTextarea" + id).value;
 
     const data = {
         content: content,
@@ -139,8 +140,37 @@ const createComment = function (id) {
 
     apiCommentCreate(data)
         .then((response) => {
-            document.getElementById("comment_textarea_" + id).value = "";
+            document.getElementById("newCommentTextarea" + id).value = "";
             emit("updatePosts");
+            return;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+const showUpdateComment = function (id) {
+    document.getElementById("CommentContent" + id).style.display = "none";
+    document.getElementById("editComment" + id).classList.add("active");
+};
+
+const hideUpdateComment = function (id) {
+    document.getElementById("CommentContent" + id).style.display = "block";
+    document.getElementById("editComment" + id).classList.remove("active");
+};
+
+const updateComment = function (id) {
+    const content = document.getElementById("editCommentTextarea" + id).value;
+
+    const data = {
+        content: content,
+        commentId: id,
+    };
+
+    apiCommentUpdate(data)
+        .then((response) => {
+            emit("updatePosts");
+            hideUpdateComment(id);
             return;
         })
         .catch((error) => {
@@ -255,7 +285,7 @@ const deleteComment = function (id) {
                         </div>
                         <textarea
                             name="comment"
-                            :id="'comment_textarea_' + post.id"
+                            :id="'newCommentTextarea' + post.id"
                             rows="3"
                             placeholder="nouveau commentaire ..."
                         ></textarea>
@@ -270,11 +300,21 @@ const deleteComment = function (id) {
                 <div class="comment-list" v-for="comment in post.Comments">
                     <div class="comment">
                         <div
+                            class="comment__options"
                             v-if="comment.User.id == authUser.data.id"
-                            class="comment__remove"
-                            @click="deleteComment(comment.id)"
                         >
-                            <i class="las la-times-circle"></i>
+                            <div
+                                class="comment__edit"
+                                @click="showUpdateComment(comment.id)"
+                            >
+                                <i class="las la-edit"></i>
+                            </div>
+                            <div
+                                class="comment__remove"
+                                @click="deleteComment(comment.id)"
+                            >
+                                <i class="las la-times-circle"></i>
+                            </div>
                         </div>
                         <div class="comment__user__image">
                             <img
@@ -290,11 +330,40 @@ const deleteComment = function (id) {
                                     {{ formatDate(comment.created_at) }}
                                 </span>
                             </div>
-                            <div class="comment__content__text">
+                            <div
+                                class="comment__content__text"
+                                :id="'CommentContent' + comment.id"
+                            >
                                 {{ comment.content }}
                             </div>
-                            <div class="comment__content__image">
-                                {{ comment.image }}
+                            <div
+                                class="comment__content__edit"
+                                :id="'editComment' + comment.id"
+                            >
+                                <textarea
+                                    hidden
+                                    :name="'editCommentTextarea' + comment.id"
+                                    :id="'editCommentTextarea' + comment.id"
+                                    rows="3"
+                                    >{{ comment.content }}</textarea
+                                >
+                                <div class="comment__content__edit__actions">
+                                    <div
+                                        class="c-button alt"
+                                        @click="hideUpdateComment(comment.id)"
+                                    >
+                                        Retour
+                                    </div>
+                                    <div
+                                        class="c-button alt"
+                                        @click="
+                                            hideUpdateComment(comment.id);
+                                            updateComment(comment.id);
+                                        "
+                                    >
+                                        Envoyer
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -531,74 +600,6 @@ const deleteComment = function (id) {
                                 </div>
                                 <div class="right">
                                     {{ post.sharedBy.length }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comments" :data-comments-id="post.id">
-                            <form action class="comment-new">
-                                <div class="comment-new__user__img">
-                                    <img
-                                        :src="authUser.data.image"
-                                        alt="image utilisateur"
-                                    />
-                                </div>
-                                <div class="comment-new__content">
-                                    <div class="comment-new__content__username">
-                                        {{ authUser.data.firstname }}
-                                        {{ authUser.data.lastname }}
-                                    </div>
-                                    <textarea
-                                        name="comment"
-                                        :id="'comment_textarea_' + post.id"
-                                        rows="3"
-                                        placeholder="nouveau commentaire ..."
-                                    ></textarea>
-                                    <div class="c-button">
-                                        <div class="left">Envoyer</div>
-                                        <div class="right">
-                                            <i class="las la-paper-plane"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <div
-                                class="comment-list"
-                                v-for="comment in post.Comments"
-                            >
-                                <div class="comment">
-                                    <div
-                                        v-if="
-                                            comment.User.id == authUser.data.id
-                                        "
-                                        class="comment__remove"
-                                    >
-                                        <i class="las la-times-circle"></i>
-                                    </div>
-                                    <div class="comment__user__image">
-                                        <img
-                                            alt="image utilisateur"
-                                            :src="comment.User.image"
-                                        />
-                                    </div>
-                                    <div class="comment__content">
-                                        <div class="comment__content__username">
-                                            {{ comment.User.firstname }}
-                                            {{ comment.User.lastname }}
-                                            <span>
-                                                {{
-                                                    formatDate(
-                                                        comment.created_at
-                                                    )
-                                                }}
-                                            </span>
-                                        </div>
-                                        <div class="comment__content__text">
-                                            {{ comment.content }}
-                                        </div>
-                                        <div class="comment__content__image">
-                                            {{ comment.image }}
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
