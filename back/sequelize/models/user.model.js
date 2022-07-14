@@ -25,21 +25,17 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 unique: true,
             },
-            email_verified_at: {
-                type: DataTypes.STRING,
-                allowNull: true,
-            },
             image: {
                 type: DataTypes.STRING,
+                // allowNull defaults to true
+            },
+            isAdmin: {
+                type: DataTypes.INTEGER,
                 // allowNull defaults to true
             },
             password: {
                 type: DataTypes.STRING,
                 allowNull: false,
-            },
-            remember_token: {
-                type: DataTypes.STRING,
-                allowNull: true,
             },
         },
         {

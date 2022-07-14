@@ -1,12 +1,16 @@
 const { models } = require("../../sequelize");
 
 module.exports = async (req, res, next) => {
+    var whereStatement = {};
+    whereStatement.id = req.params.id;
+
+    if (!req.AuthIsAdmin == true) {
+        whereStatement.userId = req.userId;
+    }
+
     try {
         const comment = await models.Comment.findOne({
-            where: {
-                userId: req.userId,
-                id: req.params.id,
-            },
+            where: whereStatement,
         });
         await comment.destroy();
         return res.status(201).json({

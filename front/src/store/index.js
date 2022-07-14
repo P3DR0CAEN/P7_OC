@@ -19,6 +19,7 @@ export const useStoreUser = defineStore("User", {
                         lastname: response.data.lastname,
                         email: response.data.email,
                         image: response.data.image,
+                        isAdmin: response.data.isAdmin,
                     };
                 })
                 .catch((error) => {

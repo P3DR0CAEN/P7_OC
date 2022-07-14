@@ -17,6 +17,8 @@ const authUser = useStoreUser();
 
 authUser.refresh();
 
+console.log(authUser);
+
 function logout() {
     localStorage.removeItem("AuthToken");
     router.push("/auth");

@@ -9,16 +9,20 @@ module.exports = async (req, res, next) => {
         imageName = "";
     }
 
+    var whereStatement = {};
+    whereStatement.id = req.params.id;
+
+    if (!req.AuthIsAdmin == true) {
+        whereStatement.userId = req.userId;
+    }
+
     await models.Post.update(
         {
             content: req.body.content,
             image: imageName,
         },
         {
-            where: {
-                id: req.body.postId,
-                userId: req.userId,
-            },
+            where: whereStatement,
             omitNull: true,
         }
     )

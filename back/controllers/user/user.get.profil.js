@@ -16,6 +16,7 @@ module.exports = async (req, res, next) => {
             "lastname",
             "email",
             "image",
+            "isAdmin",
             "created_at",
         ],
         where: { id: userId },

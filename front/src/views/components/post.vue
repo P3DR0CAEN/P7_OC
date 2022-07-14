@@ -34,6 +34,7 @@ const updateEditPostPreviewImg = (id) => {
         window.URL.createObjectURL(inputImg);
     document.querySelector("#editPostImagePreview" + id).style.display =
         "block";
+    document.querySelector("#editPostRemoveImg" + id).value = 0;
 };
 
 const removeEditPostPreviewImg = (id) => {
@@ -45,23 +46,20 @@ const removeEditPostPreviewImg = (id) => {
 const emojiPicker = (id) => {
     const button = document.querySelector("#emoji-button" + id);
     const picker = new EmojiButton();
+    picker.pickerVisible ? picker.hidePicker() : picker.showPicker(button);
     picker.on("emoji", (emoji) => {
         document.querySelector("#editPostContent" + id).value += emoji.emoji;
-    });
-    button.addEventListener("click", () => {
-        picker.pickerVisible ? picker.hidePicker() : picker.showPicker(button);
     });
 };
 
 const editPost = function (id) {
     const data = {
-        postId: id,
         content: document.querySelector("#editPostContent" + id).value,
         image: document.querySelector("#editPostImageInput" + id).files[0],
         removeImg: document.querySelector("#editPostRemoveImg" + id).value,
     };
 
-    apiPostUpdate(data)
+    apiPostUpdate(id, data)
         .then((response) => {
             emit("updatePosts");
             return;
@@ -164,10 +162,9 @@ const updateComment = function (id) {
 
     const data = {
         content: content,
-        commentId: id,
     };
 
-    apiCommentUpdate(data)
+    apiCommentUpdate(id, data)
         .then((response) => {
             emit("updatePosts");
             hideUpdateComment(id);
@@ -196,7 +193,12 @@ const deleteComment = function (id) {
             <i class="las la-share"></i> {{ userProfil.firstname }}
             {{ userProfil.lastname }} à partager ceci
         </span>
-        <div class="post__options" v-if="post.User.id == authUser.data.id">
+        <div
+            class="post__options"
+            v-if="
+                post.User.id == authUser.data.id || authUser.data.isAdmin == 1
+            "
+        >
             <div class="post__edit" @click="showPopupEditPost(post.id)">
                 <i class="las la-edit"></i>
             </div>
@@ -301,7 +303,10 @@ const deleteComment = function (id) {
                     <div class="comment">
                         <div
                             class="comment__options"
-                            v-if="comment.User.id == authUser.data.id"
+                            v-if="
+                                comment.User.id == authUser.data.id ||
+                                authUser.data.isAdmin == 1
+                            "
                         >
                             <div
                                 class="comment__edit"
