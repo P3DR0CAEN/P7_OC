@@ -7,6 +7,7 @@ const auth = require("../middleware/auth");
 const multerMiddleware = require("../middleware/multer-traitement");
 
 const postCreate = require("../controllers/post/post.create");
+const postUpdate = require("../controllers/post/post.update");
 const postDelete = require("../controllers/post/post.delete");
 const postGetAll = require("../controllers/post/post.get.all");
 const postLike = require("../controllers/post/post.like");
@@ -20,6 +21,12 @@ router.post(
     auth,
     multerMiddleware("posts"),
     asyncHandler(postCreate)
+);
+router.put(
+    "/update/:id",
+    auth,
+    multerMiddleware("posts"),
+    asyncHandler(postUpdate)
 );
 router.post("/delete/:id", auth, asyncHandler(postDelete));
 router.get("/get", auth, asyncHandler(postGetAll));

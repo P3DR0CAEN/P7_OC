@@ -1,5 +1,4 @@
 .Page_Home, .Page_Profil {
-
     > .content .content {
         flex: 1 1 40%;
         display: flex;
@@ -62,6 +61,7 @@
                 flex-direction: column;
                 gap: $space-small;
                 textarea {
+                    resize: vertical;
                     padding: $space-small;
                     width: -webkit-fill-available;
                 }
@@ -112,4 +112,8 @@
             gap: 40px;
         }
     }
+}
+
+.emoji-picker__wrapper {
+    z-index: 5;
 }
