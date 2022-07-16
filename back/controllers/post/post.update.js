@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
     var whereStatement = {};
     whereStatement.id = req.params.id;
 
-    if (!req.AuthIsAdmin == true) {
+    if (!req.AuthIsAdmin) {
         whereStatement.userId = req.userId;
     }
 

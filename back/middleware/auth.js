@@ -13,15 +13,11 @@ module.exports = async (req, res, next) => {
         req.userId = userId;
 
         // verif si authUser est admin
-        req.AuthIsAdmin = false;
-        await models.User.findOne({
+        const user = await models.User.findOne({
             attributes: ["isAdmin"],
             where: { id: userId },
-        }).then((user) => {
-            if (user.isAdmin == 1) {
-                req.AuthIsAdmin = true;
-            }
         });
+        req.AuthIsAdmin = user.isAdmin == 1;
 
         next();
     } catch (error) {

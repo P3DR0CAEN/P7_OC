@@ -12,7 +12,7 @@ const authUser = useStoreUser();
 const posts = ref(null);
 const inputPostImage = ref(null);
 const NewPost = reactive({
-    content: undefined,
+    content: "",
 });
 
 const createPost = function () {
@@ -58,8 +58,7 @@ const emojiPicker = () => {
     const button = document.querySelector("#emoji-button");
     const picker = new EmojiButton();
     picker.on("emoji", (emoji) => {
-        document.getElementById("NewPostContent").value += emoji.emoji;
-        NewPost.content = document.getElementById("NewPostContent").value;
+        NewPost.content += emoji.emoji;
     });
     button.addEventListener("click", () => {
         picker.pickerVisible ? picker.hidePicker() : picker.showPicker(button);

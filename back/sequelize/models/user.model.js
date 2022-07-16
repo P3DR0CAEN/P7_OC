@@ -15,14 +15,17 @@ module.exports = (sequelize) => {
             firstName: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                notEmpty: true,
             },
             lastName: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                notEmpty: true,
             },
             email: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                notEmpty: true,
                 unique: true,
             },
             image: {
@@ -36,6 +39,7 @@ module.exports = (sequelize) => {
             password: {
                 type: DataTypes.STRING,
                 allowNull: false,
+                notEmpty: true,
             },
         },
         {
