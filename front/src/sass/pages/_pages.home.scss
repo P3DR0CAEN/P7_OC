@@ -65,11 +65,14 @@
                     padding: $space-small;
                     width: -webkit-fill-available;
                 }
-                .postPreviewImg {
+                .newPostPreviewImg {
                     position: relative;
                     display: none;
                     width: fit-content;
                     margin: 0 auto;
+                    &.active {
+                        display: block;
+                    }
                     .postPreviewImgRemove {
                         position: absolute;
                         top: 0;

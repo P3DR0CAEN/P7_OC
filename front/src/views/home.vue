@@ -10,36 +10,58 @@ import { EmojiButton } from "@joeattardi/emoji-button";
 const authUser = useStoreUser();
 
 const posts = ref(null);
-const inputPostImage = ref(null);
-const NewPost = reactive({
-    content: "",
-});
+
+const newPostShowImage = reactive({ value: false });
+
+const newPostPreviewImage = ref(null);
+
+const newPostImageInput = ref(null);
+
+const newPostContent = ref(null);
+const resizeTextarea = () => {
+    newPostContent.value.style.height = "18px";
+    newPostContent.value.style.height =
+        newPostContent.value.scrollHeight + "px";
+};
+
+const updateNewPostPreviewImg = () => {
+    const inputImg = newPostImageInput.value.files[0];
+
+    newPostShowImage.value = true;
+    newPostPreviewImage.value.src = window.URL.createObjectURL(inputImg);
+};
+const removeNewPostPreviewImg = () => {
+    newPostShowImage.value = false;
+    newPostImageInput.value.value = null;
+};
+
+const emojiButton = ref(null);
+const emojiPicker = () => {
+    const button = emojiButton.value;
+    const picker = new EmojiButton();
+    picker.pickerVisible ? picker.hidePicker() : picker.showPicker(button);
+    picker.on("emoji", (emoji) => {
+        newPostContent.value.value += emoji.emoji;
+    });
+};
+
+const newPostError = reactive({ value: null });
 
 const createPost = function () {
     const data = {
-        content: NewPost.content,
-        image: inputPostImage.value.files[0],
+        content: newPostContent.value.value,
+        image: newPostImageInput.value.files[0],
     };
 
     apiPostCreate(data)
         .then((response) => {
-            NewPost.content = undefined;
-            removePostPreviewImg();
-            document
-                .querySelectorAll(".response__error")
-                .forEach((el) => el.remove());
+            newPostContent.value.value = "";
+            removeNewPostPreviewImg();
             updatePosts();
-            return;
+            newPostError.value = null;
         })
         .catch((error) => {
-            document
-                .getElementById("NewPostContent")
-                .insertAdjacentHTML(
-                    "afterend",
-                    '<div class="response__error">' +
-                        error.response.data.error +
-                        "</div>"
-                );
+            newPostError.value = error.response.data.error;
         });
 };
 
@@ -54,33 +76,8 @@ const updatePosts = async function () {
         });
 };
 
-const emojiPicker = () => {
-    const button = document.querySelector("#emoji-button");
-    const picker = new EmojiButton();
-    picker.on("emoji", (emoji) => {
-        NewPost.content += emoji.emoji;
-    });
-    button.addEventListener("click", () => {
-        picker.pickerVisible ? picker.hidePicker() : picker.showPicker(button);
-    });
-};
-
-const updatePostPreviewImg = () => {
-    document.getElementById("postPreviewImg").src = window.URL.createObjectURL(
-        inputPostImage.value.files[0]
-    );
-    document.querySelector(".postPreviewImg").style.display = "block";
-};
-
-const removePostPreviewImg = () => {
-    document.getElementById("post_image").value = null;
-    document.querySelector(".postPreviewImg").style.display = "none";
-};
-
 onMounted(async () => {
     updatePosts();
-
-    emojiPicker();
 });
 </script>
 
@@ -94,36 +91,54 @@ onMounted(async () => {
             </div>
             <div class="new_post__content">
                 <textarea
+                    ref="newPostContent"
+                    @input="resizeTextarea()"
                     cols="30"
                     rows="5"
-                    v-model="NewPost.content"
                     id="NewPostContent"
                     placeholder="Quoi de neuf ?"
                 ></textarea>
-                <div class="postPreviewImg">
+                <div
+                    v-bind:class="newPostError.value ? 'active' : ''"
+                    class="response__error"
+                >
+                    {{ newPostError.value }}
+                </div>
+                <div
+                    class="newPostPreviewImg"
+                    v-bind:class="newPostShowImage.value ? 'active' : ''"
+                >
                     <div
                         class="postPreviewImgRemove"
-                        @click="removePostPreviewImg()"
+                        @click="removeNewPostPreviewImg()"
                     >
                         <i class="las la-times-circle"></i>
                     </div>
-                    <img id="postPreviewImg" src="#" alt="your image" />
+                    <img
+                        ref="newPostPreviewImage"
+                        src="#"
+                        alt="image du post"
+                    />
                 </div>
 
                 <input
                     type="file"
                     hidden
                     name="post_image"
-                    id="post_image"
-                    ref="inputPostImage"
-                    @change="updatePostPreviewImg()"
+                    id="newPostImageInput"
+                    ref="newPostImageInput"
+                    @change="updateNewPostPreviewImg()"
                 />
                 <div class="new_post__actions">
                     <div class="icons">
-                        <label for="post_image"
+                        <label for="newPostImageInput"
                             ><i class="las la-image"></i
                         ></label>
-                        <i id="emoji-button" class="las la-smile"></i>
+                        <i
+                            ref="emojiButton"
+                            @click="emojiPicker"
+                            class="las la-smile"
+                        ></i>
                     </div>
                     <div class="c-button" @click="createPost()">
                         <div class="left">Poster</div>

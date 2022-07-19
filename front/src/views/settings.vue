@@ -15,6 +15,8 @@ const dataForm = reactive({
     image: authUser.data.image,
 });
 
+const responseError = reactive({ value: null });
+
 function updateUserInfos() {
     const data = {
         firstName: dataForm.firstName,
@@ -24,25 +26,17 @@ function updateUserInfos() {
     };
     apiUpdateUser(data)
         .then((response) => {
-            document
-                .querySelectorAll(".response__error")
-                .forEach((el) => el.remove());
+            responseError.value = null;
             authUser.refresh();
         })
         .catch((error) => {
-            document
-                .getElementById("button")
-                .insertAdjacentHTML(
-                    "afterend",
-                    '<div class="response__error">' +
-                        error.response.data.error +
-                        "</div>"
-                );
+            responseError.value = error.response.data.error;
         });
 }
 
+const userPreviewImg = ref(null);
 const updateUserPreviewImg = () => {
-    document.getElementById("userPreviewImg").src = window.URL.createObjectURL(
+    userPreviewImg.value.src = window.URL.createObjectURL(
         inputUserImage.value.files[0]
     );
 };
@@ -55,7 +49,7 @@ const updateUserPreviewImg = () => {
         <div class="profil__image">
             <img
                 :src="dataForm.image"
-                id="userPreviewImg"
+                ref="userPreviewImg"
                 alt="image utilisateur"
             />
             <label class="user_image_btn" for="user_image"
@@ -63,7 +57,6 @@ const updateUserPreviewImg = () => {
             ></label>
             <input
                 type="file"
-                name="user_image"
                 id="user_image"
                 ref="inputUserImage"
                 hidden
@@ -88,7 +81,14 @@ const updateUserPreviewImg = () => {
             <input v-model="dataForm.email" type="text" placeholder="Email" />
         </div>
 
-        <div class="form-row" id="button">
+        <div
+            v-bind:class="responseError.value ? 'active' : ''"
+            class="response__error"
+        >
+            {{ responseError.value }}
+        </div>
+
+        <div class="form-row">
             <div class="c-button alt" @click="updateUserInfos()">
                 Mettre à jour
             </div>

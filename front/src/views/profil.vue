@@ -1,10 +1,10 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
+import formatDate from "../lib/formatDate";
 import { useRoute } from "vue-router";
 import { useStoreUser } from "../store";
 import { GetUserProfil } from "../api/user/user.profil";
 import { GetUserPosts } from "../api/user/user.profil";
-import moment from "moment";
 
 import postComponent from "./components/post.vue";
 
@@ -19,10 +19,6 @@ if (route.params.id) {
 
 const userProfil = ref(null);
 const userPosts = ref(null);
-
-const formatDate = function (date) {
-    return moment(new Date(date)).format("DD/MM/YY à HH:mm");
-};
 
 const updateProfil = async function () {
     userProfil.value = await GetUserProfil(userId)

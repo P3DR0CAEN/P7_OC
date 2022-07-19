@@ -5,7 +5,8 @@ module.exports = async (req, res, next) => {
     if (typeof req.file !== "undefined") {
         imageName = req.file.filename;
     }
-    if (req.body.removeImg == 1) {
+
+    if (req.body.removeImg == "true") {
         imageName = "";
     }
 

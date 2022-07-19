@@ -6,6 +6,12 @@ module.exports = async (req, res, next) => {
         imageName = req.file.filename;
     }
 
+    if (req.body.content == "") {
+        return res.status(500).json({
+            error: "Le contenu ne peut pas être vide !",
+        });
+    }
+
     await models.Post.create(
         {
             content: req.body.content,
@@ -23,15 +29,6 @@ module.exports = async (req, res, next) => {
             });
         })
         .catch((error) => {
-            if (
-                typeof error.errors !== "undefined" &&
-                error.errors[0].type == "notNull Violation"
-            ) {
-                return res.status(500).json({
-                    error: "Le contenu ne peut pas être vide !",
-                });
-            }
-
             return res.status(500).json({
                 error: "Une erreur est survenue !",
             });

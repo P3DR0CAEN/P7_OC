@@ -113,7 +113,12 @@
                 }
             }
             .response__error {
+                text-align: center;
                 color: red;
+                display: none;
+                &.active {
+                    display: block;
+                }
             }
         }
     }

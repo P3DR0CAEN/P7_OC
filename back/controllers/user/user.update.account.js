@@ -6,6 +6,22 @@ module.exports = async (req, res, next) => {
         imageName = req.file.filename;
     }
 
+    if (req.body.firstName == "") {
+        return res.status(500).json({
+            error: "Le prénom ne peut pas être vide !",
+        });
+    }
+    if (req.body.lastName == "") {
+        return res.status(500).json({
+            error: "Le nom ne peut pas être vide !",
+        });
+    }
+    if (req.body.email == "") {
+        return res.status(500).json({
+            error: "L'email ne peut pas être vide !",
+        });
+    }
+
     const format_email = /\S+@\S+\.\S+/;
     if (!format_email.test(req.body.email)) {
         return res.status(500).json({

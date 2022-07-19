@@ -20,6 +20,8 @@ const firstName = ref("");
 const lastName = ref("");
 const password = ref("");
 
+const responseError = reactive({ value: null });
+
 async function register() {
     // POST request using axios with error handling
     const data = {
@@ -34,8 +36,7 @@ async function register() {
             return;
         })
         .catch((error) => {
-            document.getElementById("respError").innerHTML =
-                error.response.data.error;
+            responseError.value = error.response.data.error;
         });
 }
 
@@ -52,14 +53,7 @@ async function login() {
             return;
         })
         .catch((error) => {
-            if (typeof error.response !== "undefined") {
-                document.getElementById("respError").innerHTML =
-                    error.response.data.error;
-            } else {
-                console.log(error);
-                document.getElementById("respError").innerHTML =
-                    "Une erreur est survenue !";
-            }
+            responseError.value = error.response.data.error;
         });
 }
 </script>
@@ -107,6 +101,11 @@ async function login() {
                 Créer mon compte
             </div>
         </div>
-        <div id="respError" style="color: red; text-align: center"></div>
+        <div
+            class="response__error"
+            v-bind:class="responseError.value ? 'active' : ''"
+        >
+            {{ responseError.value }}
+        </div>
     </div>
 </template>

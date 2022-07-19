@@ -1,10 +1,8 @@
 <script setup>
 import CHeader from "@/views/components/header.vue";
 import CFooter from "@/views/components/footer.vue";
-
 import { RouterLink } from "vue-router";
 import router from "../../router";
-
 import { useStoreUser } from "../../store";
 
 defineProps({
@@ -16,8 +14,6 @@ console.log("layoutdefault");
 const authUser = useStoreUser();
 
 authUser.refresh();
-
-console.log(authUser);
 
 function logout() {
     localStorage.removeItem("AuthToken");
