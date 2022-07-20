@@ -9,8 +9,6 @@ defineProps({
     mainClass: String,
 });
 
-console.log("layoutdefault");
-
 const authUser = useStoreUser();
 
 authUser.refresh();
@@ -48,12 +46,15 @@ function logout() {
                                 <i class="las la-home"></i>
                             </div>
                         </RouterLink>
-                        <RouterLink class="c-button" :to="{ name: 'profil' }">
+                        <a
+                            :href="'/profil/' + authUser.data.id"
+                            class="c-button"
+                        >
                             <div class="left">Profil</div>
                             <div class="right">
                                 <i class="las la-user"></i>
                             </div>
-                        </RouterLink>
+                        </a>
                         <RouterLink class="c-button" :to="{ name: 'settings' }">
                             <div class="left">Paramètres</div>
                             <div class="right">

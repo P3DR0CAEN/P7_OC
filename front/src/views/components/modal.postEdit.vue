@@ -4,7 +4,7 @@ import formatDate from "../../lib/formatDate";
 import apiPostUpdate from "../../api/post/post.update";
 import { EmojiButton } from "@joeattardi/emoji-button";
 
-defineProps(["post", "authUser", "isModalVisible"]);
+defineProps(["post", "authUser", "userProfil", "isModalVisible"]);
 const emit = defineEmits(["switchModalVisibility", "updatePosts"]);
 
 const switchModalVisibility = () => emit("switchModalVisibility");

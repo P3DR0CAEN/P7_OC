@@ -243,6 +243,7 @@ const updatePosts = function () {
         :isModalVisible="showModalPostEdit"
         :post="post"
         :authUser="authUser"
+        :userProfil="userProfil"
         @switch-modal-visibility="showModalPostEdit.switch()"
         @update-posts="updatePosts()"
     />
@@ -250,6 +251,7 @@ const updatePosts = function () {
         :isModalVisible="showModalPostDelete"
         :post="post"
         :authUser="authUser"
+        :userProfil="userProfil"
         @switch-modal-visibility="showModalPostDelete.switch()"
         @update-posts="updatePosts()"
     />

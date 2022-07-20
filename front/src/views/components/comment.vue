@@ -81,8 +81,10 @@ const updatePost = function () {
         </div>
         <div class="comment__content">
             <div class="comment__content__username">
-                {{ comment.User.firstname }}
-                {{ comment.User.lastname }}
+                <a :href="'/profil/' + comment.User.id">
+                    {{ comment.User.firstname }}
+                    {{ comment.User.lastname }} </a
+                >&nbsp;
                 <span>
                     {{ formatDate(comment.created_at) }}
                 </span>

@@ -22,6 +22,7 @@ module.exports = async (req, res, next) => {
         {
             model: models.Comment,
             attributes: ["id", "content", "created_at"],
+            order: "created_at ASC",
             include: {
                 model: models.User,
                 attributes: ["id", "firstname", "lastname", "image"],
@@ -106,6 +107,13 @@ module.exports = async (req, res, next) => {
                     post["image"] =
                         "http://" + host + "/images/posts/" + post.image;
                 }
+                post.Comments.forEach((comment) => {
+                    comment.User["image"] =
+                        "http://" +
+                        host +
+                        "/images/users/" +
+                        comment.User.image;
+                });
                 post.dataValues["sortedDate"] = post.created_at;
                 if (typeof post.liked_posts !== "undefined") {
                     post.dataValues["sortedDate"] = post.liked_posts.created_at;

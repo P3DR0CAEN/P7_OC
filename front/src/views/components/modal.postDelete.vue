@@ -3,7 +3,7 @@ import { ref, reactive, toRefs } from "vue";
 import formatDate from "../../lib/formatDate";
 import apiPostDelete from "../../api/post/post.delete";
 
-defineProps(["post", "authUser", "isModalVisible"]);
+defineProps(["post", "authUser", "userProfil", "isModalVisible"]);
 const emit = defineEmits(["switchModalVisibility", "updatePosts"]);
 
 const switchModalVisibility = () => emit("switchModalVisibility");
@@ -63,7 +63,11 @@ const updatePosts = function () {
                         <div class="post__content__text">
                             {{ post.content }}
                         </div>
-                        <div v-if="post.image" class="post__content__image">
+                        <div
+                            v-if="post.image"
+                            class="post__content__image"
+                            v-bind:class="post.image ? 'active' : ''"
+                        >
                             <img :src="post.image" alt="" />
                         </div>
 
