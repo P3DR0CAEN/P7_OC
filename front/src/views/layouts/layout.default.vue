@@ -46,15 +46,12 @@ function logout() {
                                 <i class="las la-home"></i>
                             </div>
                         </RouterLink>
-                        <a
-                            :href="'/profil/' + authUser.data.id"
-                            class="c-button"
-                        >
+                        <RouterLink :to="{ name: 'profil' }" class="c-button">
                             <div class="left">Profil</div>
                             <div class="right">
                                 <i class="las la-user"></i>
                             </div>
-                        </a>
+                        </RouterLink>
                         <RouterLink class="c-button" :to="{ name: 'settings' }">
                             <div class="left">Paramètres</div>
                             <div class="right">

@@ -81,9 +81,11 @@ const updatePost = function () {
         </div>
         <div class="comment__content">
             <div class="comment__content__username">
-                <a :href="'/profil/' + comment.User.id">
+                <RouterLink
+                    :to="{ name: 'profil', params: { id: comment.User.id } }"
+                >
                     {{ comment.User.firstname }}
-                    {{ comment.User.lastname }} </a
+                    {{ comment.User.lastname }} </RouterLink
                 >&nbsp;
                 <span>
                     {{ formatDate(comment.created_at) }}

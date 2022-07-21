@@ -132,8 +132,10 @@ const updatePosts = function () {
         </div>
         <div class="post__content">
             <div class="post__content__user_name">
-                <a :href="'/profil/' + post.User.id"
-                    >{{ post.User.firstname }} {{ post.User.lastname }}</a
+                <RouterLink
+                    :to="{ name: 'profil', params: { id: post.User.id } }"
+                    >{{ post.User.firstname }}
+                    {{ post.User.lastname }}</RouterLink
                 >
                 <br />
                 <span class="post__content__date"
@@ -230,6 +232,7 @@ const updatePosts = function () {
                 </form>
                 <div class="comment-list" v-for="comment in post.Comments">
                     <comment-component
+                        :key="'comment_' + comment.id"
                         :comment="comment"
                         :authUser="authUser"
                         @update-posts="updatePosts()"

@@ -26,7 +26,7 @@ onMounted(() => {
 
 <template>
     <component :is="layout()" :mainClass="className()">
-        <router-view />
+        <router-view :key="$route.fullPath" />
     </component>
 </template>
 
